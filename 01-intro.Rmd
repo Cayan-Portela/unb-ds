@@ -1,0 +1,137 @@
+# Introduction {#intro}
+
+This material is under constant development and will be used to show fundamental concepts of data science.
+
+Example:
+
+Operational Risk. Loss Distribution Approach.
+
+Creating sequence of dates. Simulated values will be regarded to a weekly period of time.
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+# sequence of dates (weekly)
+date_seq <- seq.Date(from = as.Date("2022-01-01"),
+                     to = as.Date("2022-06-30"),
+                     by = "week")
+# number of weeks
+n_week <- length(date_seq)
+```
+
+Simulating data-set with poisson and negative binomial distributions.
+(explicar parametros e o que os valores da tabela significam. abc)
+```{r nice-tab}
+sim_data <- data.frame(
+  week = date_seq,
+  poisson = rpois(n = n_week, lambda = 15),
+  neg_bin = rnbinom(n = n_week, mu = 10, size = 4)
+)
+
+knitr::kable(
+  head(sim_data, 10), caption = "Simulated values",
+  booktabs = TRUE)
+```
+
+Explaining the difference between distributions.
+
+```{r nice-fig, warning=FALSE, fig.width=7, echo=FALSE}
+library(ggh4x)
+library(patchwork)
+
+p1 <- ggplot(
+  data.frame(x = 0:30, y = dpois(0:30, lambda = 5))
+) +
+  geom_point(
+    aes(x = x, y = y),
+    colour = "#E41A1C"
+  ) +
+  geom_segment(
+    aes(x = x, xend = x, y = 0, yend = y),
+    colour = "#E41A1C", alpha = 0.5
+  ) +
+  labs(
+    x = "", y = "",
+    title = "Poisson \u03BB = 5"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
+
+p2 <- ggplot(
+  data.frame(x = 0:30, y = dnbinom(0:30, mu = 10, size = 4))
+) +
+  geom_point(
+    aes(x = x, y = y),
+    colour = "#377EB8"
+  ) +
+  geom_segment(
+    aes(x = x, xend = x, y = 0, yend = y),
+    colour = "#377EB8", alpha = 0.5
+  ) +
+  labs(
+    x = "", y = "",
+    title = "Negative Binomial"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
+
+p3 <- p1 / p2
+
+p3
+```
+Now we are going to use this values to simulate $n$ observations for a continuous distribution and sum them up.
+This will be our simulated severity loss.
+Gamma, Log-normal and Weibull.
+
+Customized function.
+
+
+```{r}
+severidade <- function(n_dist, dist, pars) {
+
+  random_function <- switch(dist,
+    gamma     = "rgamma",
+    lognormal = "rlnorm",
+    weibull   = "rweibull",
+    stop("Invalid distribution")
+  )
+
+  parameters <- c("n" = n_dist, pars)
+  values <- do.call(what = random_function, args = parameters)
+
+  return(sum(values))
+}
+```
+
+Severity values with frquency genreated by poisson distribution
+```{r}
+
+sev_pois <- sim_data %>%
+  select(week, poisson) %>%
+  dplyr::rowwise() %>%
+  mutate(
+    # gamma
+    gamma = severidade(
+      n_dist = poisson, dist = "gamma",
+      pars = list("shape" = 6, "rate" = 0.0006)
+    ),
+    # log-normal
+    lnorm = severidade(
+      n_dist = poisson, dist = "lognormal",
+      pars = list("meanlog" = 9, "sdlog" = 0.4)
+    ),
+    # weibull
+    weib = severidade(
+      n_dist = poisson, dist = "weibull",
+      pars = list("shape" = 2.75, "scale" = 12000)
+    )
+  )
+```
+Reference a figure by its code chunk label with the `fig:` prefix, e.g.,  Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+
+You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
