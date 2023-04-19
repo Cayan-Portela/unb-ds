@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 5 Hypothesis Testing | UnB - Data Science</title>
+<meta name="author" content="Cayan Portela and Herbert Kimura">
+<meta name="description" content="5.1 Conceitos  População: conjunto de observações de interesse. Em geral, não temos acesso à todos os elementos da população. (recursos escassos ou população infinita) Dessa maneira, o...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 5 Hypothesis Testing | UnB - Data Science">
+<meta property="og:type" content="book">
+<meta property="og:description" content="5.1 Conceitos  População: conjunto de observações de interesse. Em geral, não temos acesso à todos os elementos da população. (recursos escassos ou população infinita) Dessa maneira, o...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 5 Hypothesis Testing | UnB - Data Science">
+<meta name="twitter:description" content="5.1 Conceitos  População: conjunto de observações de interesse. Em geral, não temos acesso à todos os elementos da população. (recursos escassos ou população infinita) Dessa maneira, o...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">UnB - Data Science</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> About</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="" href="literature.html"><span class="header-section-number">3</span> Literature</a></li>
+<li><a class="" href="methods.html"><span class="header-section-number">4</span> Methods</a></li>
+<li><a class="active" href="hypothesis-testing.html"><span class="header-section-number">5</span> Hypothesis Testing</a></li>
+<li><a class="" href="final-words.html"><span class="header-section-number">6</span> Final Words</a></li>
+<li><a class="" href="other-considerations.html"><span class="header-section-number">7</span> Other Considerations</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="hypothesis-testing" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Hypothesis Testing<a class="anchor" aria-label="anchor" href="#hypothesis-testing"><i class="fas fa-link"></i></a>
+</h1>
+<div id="conceitos" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Conceitos<a class="anchor" aria-label="anchor" href="#conceitos"><i class="fas fa-link"></i></a>
+</h2>
+<blockquote>
+<p><strong>População</strong>: conjunto de observações de interesse. Em geral, não temos acesso à todos os elementos da população. (recursos escassos ou população infinita)</p>
+</blockquote>
+<p>Dessa maneira, o conhecimento adquirido em relação à população de interesse é feito exaimando apenas alguns elementos da população.</p>
+<blockquote>
+<p><strong>Amostra Aleatória Simples (A.A.S.)</strong>: Nesse tipo de amostragem, cada elemento tem a mesma probabilidade de ser incluído na amostra.</p>
+</blockquote>
+<p>Ao selecionar uma amostra aleatória de tamanho <span class="math inline">\(n\)</span>, obtemos um vetor aleatório <span class="math inline">\((x_1, x_2, ..., x_n)\)</span>. Com o vetor aleatória, podemos calcular a média amostral <span class="math inline">\(\bar{x}\)</span>.
+A média amostral <span class="math inline">\(\bar{x}\)</span> também é uma variável aleatória, pois seu valor varia de amostra para amostra. As medidas geradas por valores amostrais são estatísticas.</p>
+<blockquote>
+<p><strong>Parâmetro</strong>: Medida de uma característic da população (não é uma v.a.). Em geral, representada por <span class="math inline">\(\theta\)</span>.</p>
+</blockquote>
+<blockquote>
+<p><strong>Estatística</strong>: Característica associada aos dados de uma amostra. É uma função das variáveis aleatórias que constituem uma amostra. É portanto, uma variável aelatória.</p>
+</blockquote>
+<blockquote>
+<p><strong>Estimador</strong>: É uma estatística construída com a finalidade de representar, ou estimar, o parâmetro de interesse na população. As estimativas são os valores numéricos assumidos pelos estimadores, usualmente denotados por <span class="math inline">\(\hat{\theta}\)</span>.</p>
+</blockquote>
+</div>
+<div id="análise-de-experimentos" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Análise de Experimentos<a class="anchor" aria-label="anchor" href="#an%C3%A1lise-de-experimentos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Em experimentos, nos referimos à investigações em que o pesquisador possuir controle sob as condições de interesse, tornando viável a inferência sobre relações de causa e efeito.
+Pode-se definir experimento como um série de rodadas em que mudanças propositais são realizadas nas variáveis de <em>input</em> para poder verificar possíveis alterações na variávei resposta (Montgomery, 2013).</p>
+<ul>
+<li><p>Tratamentos: “intervenções” de interesse.</p></li>
+<li><p>Unidades experimentais: menor subdivisão do experimento a que o tratamento é atribuído.</p></li>
+<li><p>Respostas: medida de interesse observada na unidade experimental.</p></li>
+<li>
+<p>Príncipios da Análise de Experimentos.</p>
+<ul>
+<li>Randomização</li>
+<li>Replicação</li>
+<li>Blocagem</li>
+</ul>
+</li>
+</ul>
+<p>Randomização corresponde à aleatoriedade na alocação de tratamentos em unidades experimentaise nas rodadas do experimento. Em geral, isso valida os pressupostos de independência de métodos estatísticos.</p>
+<p>Replicação corresponde à rodadas independentes em cada combinação de tratamentos/fatores. Permite obter uma estimativa do erro experimental, consequentemente dos parâmetros (importante na comparação entre tratamentos).</p>
+<p>Blocagem é utilizado para reduzir a variabilidade relativa à ruídos; fatores que podem influenciar a resposta observada na unidade exeprimental, mas em que não temos interesse direto.</p>
+</div>
+<div id="experimentos-completamente-randomizados" class="section level2" number="5.3">
+<h2>
+<span class="header-section-number">5.3</span> Experimentos completamente randomizados<a class="anchor" aria-label="anchor" href="#experimentos-completamente-randomizados"><i class="fas fa-link"></i></a>
+</h2>
+<p>A idéia de experimentos completamente randomizados é que a escolha do tratamento a ser atribuído para a <span class="math inline">\(i\)</span>-ésima observação seja aleatória.</p>
+<p>Por exemplo, caso deseja-se realizar um experimento que compare duas marcas de fertilizantes “A” e “B”, referente ao crescimento das plantas. Nesse caso, imagine que temos 10 plantas, dispostas em um mesmo terreno, plantadas em um mesmo determinado tempo, sob as mesmas condições:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="center">P1</th>
+<th align="center">P2</th>
+<th align="center">P3</th>
+<th align="center">P4</th>
+<th align="center">P5</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="center">P6</td>
+<td align="center">P7</td>
+<td align="center">P8</td>
+<td align="center">P9</td>
+<td align="center">P10</td>
+</tr></tbody>
+</table></div>
+<p>Queremos então, que os tratamentos “A” e “B” (referntes aos fertilizantes), sejam atribuídos aleatoriamente às plantas.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trat1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<span class="va">trat1</span></code></pre></div>
+<pre><code> [1] "A" "A" "A" "A" "A" "B" "B" "B" "B" "B"</code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">trat1</span>, <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<pre><code> [1] "A" "B" "A" "B" "B" "B" "A" "B" "A" "A"</code></pre>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+<span class="va">df_planta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>planta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"P"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>,
+                    trat   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">trat1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">df_planta</span></code></pre></div>
+<pre><code># A tibble: 10 × 2
+   planta trat 
+   &lt;chr&gt;  &lt;chr&gt;
+ 1 P1     A    
+ 2 P2     B    
+ 3 P3     A    
+ 4 P4     B    
+ 5 P5     B    
+ 6 P6     B    
+ 7 P7     A    
+ 8 P8     B    
+ 9 P9     A    
+10 P10    A    </code></pre>
+<p>Digamos então, que o experimento foi realizado, e os seguintes valores referentes ao crescimento da planta (em cm), foram observados:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_planta</span> <span class="op">&lt;-</span> <span class="va">df_planta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>y_cm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">14.22</span>, <span class="fl">5.59</span>, <span class="fl">15.41</span>, <span class="fl">10.34</span>, <span class="fl">9.73</span>,
+                  <span class="fl">12.32</span>, <span class="fl">16.15</span>, <span class="fl">10.80</span>, <span class="fl">15.29</span>, <span class="fl">12.44</span> <span class="op">)</span> <span class="op">)</span>
+
+<span class="va">df_planta</span></code></pre></div>
+<pre><code># A tibble: 10 × 3
+   planta trat   y_cm
+   &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;
+ 1 P1     A     14.2 
+ 2 P2     B      5.59
+ 3 P3     A     15.4 
+ 4 P4     B     10.3 
+ 5 P5     B      9.73
+ 6 P6     B     12.3 
+ 7 P7     A     16.2 
+ 8 P8     B     10.8 
+ 9 P9     A     15.3 
+10 P10    A     12.4 </code></pre>
+<p>Observando o box-plot abaixo, o tratamento “A” parece ter fornecido um maior impulsionamento no crescimento das plantas, em relação ao tratamento “B”.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">df_planta</span><span class="op">$</span><span class="va">y_cm</span>, <span class="va">df_planta</span><span class="op">$</span><span class="va">trat</span>, <span class="va">mean</span><span class="op">)</span></code></pre></div>
+<pre><code>     A      B 
+14.702  9.756 </code></pre>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_planta</span>, 
+       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trat</span>, y <span class="op">=</span> <span class="va">y_cm</span>, fill <span class="op">=</span> <span class="va">trat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="bookdown-demo_files/figure-html/unnamed-chunk-15-1.png" width="672"></div>
+<p>Vamos osbervar então, como foi a diferença das médias entre tratamentos:</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R">  <span class="va">df_planta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">trat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>media <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">y_cm</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+    <span class="va">.</span><span class="op">$</span><span class="va">media</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>      1
+2 4.946</code></pre>
+<p>Porém, supondo não haver diferença entre os tratamentos, e que ambos tenham a mesma distribuição, o quão “raro” seria observar exatamente essa diferença?</p>
+<p>O número de combinações possíveis é de <span class="math inline">\({10\choose 5} = 252\)</span></p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 252</code></pre>
+<p>Dentre todas as combinações possíveis, podemos analisar a distirbuição de diferenças de médias, considerando os dados observados.</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y1</span> <span class="op">&lt;-</span> <span class="va">df_planta</span><span class="op">$</span><span class="va">y_cm</span>
+
+<span class="va">medias</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/combn.html">combn</a></span><span class="op">(</span><span class="va">y1</span>, m <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+
+<span class="va">N</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>
+<span class="va">dif_media</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">N</span><span class="op">)</span>
+
+  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">dif_media</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">medias</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">medias</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>   
+  <span class="op">}</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">dif_media</span><span class="op">)</span>,
+                   fill <span class="op">=</span> <span class="st">"cyan4"</span>,
+                   col <span class="op">=</span> <span class="st">"white"</span>,
+                   bins <span class="op">=</span> <span class="fl">30</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">dif_media</span>, <span class="fl">0.025</span><span class="op">)</span>,
+                              <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">dif_media</span>, <span class="fl">0.975</span><span class="op">)</span><span class="op">)</span>,
+               col <span class="op">=</span> <span class="st">"firebrick"</span>,
+               linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">4.946</span>, y <span class="op">=</span> <span class="fl">0</span>, size <span class="op">=</span> <span class="fl">1.5</span>, col <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">p1</span></code></pre></div>
+<div class="inline-figure"><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672"></div>
+<p>A partir daí, podemos ter a ideia de que, dado a suposição de que não há diferença entre as médias, o resultado observado é um tanto quanto raro. Com esse conceito, temos então, indícios de que a suposição de igualdade entre as distribuições das médias não seja o que de fato ocorre.</p>
+<p>Assumindo independência entre as observações, temos que as observações possuem a mesma probabilidade de receber certo tratamento. Então, a probabilidade de observamos um valor maior ou tão extremo quanto o observado, é dada por:</p>
+<p><span class="math display">\[ P( X \ge x | H_0) = \sum_{i=1}^{N\choose k} \frac{I(x_i \le x*)}{N\choose k}\]</span></p>
+<p>No exemplo, podemos calcular:</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">dif_media</span> <span class="op">&gt;=</span> <span class="fl">4.946</span><span class="op">)</span> <span class="op">/</span> <span class="va">N</span></code></pre></div>
+<pre><code>[1] 0.003968254</code></pre>
+<p>E no caso bilateral:</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">dif_media</span> <span class="op">&gt;=</span> <span class="fl">4.946</span><span class="op">)</span> <span class="op">/</span> <span class="va">N</span></code></pre></div>
+<pre><code>[1] 0.007936508</code></pre>
+<div class="inline-figure"><img src="bookdown-demo_files/figure-html/unnamed-chunk-22-1.png" width="672"></div>
+<p>E se ao invés de cinco replicações por tratamento, tivéssemos 10?</p>
+<div class="inline-figure"><img src="bookdown-demo_files/figure-html/unnamed-chunk-24-1.png" width="672"></div>
+<p>E se fossem 20?</p>
+<pre><code>Error: não é possível alocar vetor de tamanho 63.2 Gb</code></pre>
+<p>O número de combinações torna-se muito grande <span class="math inline">\({20\choose 10} = 184756\)</span></p>
+<p>Por outro lado, se tivéssemos apenas duas replicações, o número de combinações seria de apenas 6.</p>
+<p>Assim, a replicação permite uma maior robustez quanto à estimativa da possível variabilidade presente no fenômeno. Como em algum certo ponto é inviável simularmos todas as possíveis ocorrências do fenômeno, recorremos à distribuições de probabilidade que modelam o processo gerador de dados.</p>
+<p>Para comparar a média dos dois tratamentos, podemos utilizar o teste-t para variâncias iguais.</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">df_planta</span><span class="op">$</span><span class="va">y_cm</span><span class="op">[</span><span class="va">df_planta</span><span class="op">$</span><span class="va">trat</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">]</span>,
+       <span class="va">df_planta</span><span class="op">$</span><span class="va">y_cm</span><span class="op">[</span><span class="va">df_planta</span><span class="op">$</span><span class="va">trat</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">]</span>,
+       var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code>
+    Two Sample t-test
+
+data:  df_planta$y_cm[df_planta$trat == "A"] and df_planta$y_cm[df_planta$trat == "B"]
+t = 3.8129, df = 8, p-value = 0.005142
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 1.954676 7.937324
+sample estimates:
+mean of x mean of y 
+   14.702     9.756 </code></pre>
+<p>Que é equivalente ao resultado da anova, pois <span class="math inline">\(t_v^2 = F_{1,v}\)</span>.</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">y_cm</span> <span class="op">~</span> <span class="va">trat</span>, data <span class="op">=</span> <span class="va">df_planta</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>            Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+trat         1  61.16   61.16   14.54 0.00514 **
+Residuals    8  33.65    4.21                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">3.8129</span><span class="op">^</span><span class="fl">2</span></code></pre></div>
+<pre><code>[1] 14.53821</code></pre>
+<ul>
+<li>Mas o que representam esses resultados?</li>
+</ul>
+<p>Para avaliar a diferença entre a média de dois ou mais tratmentos, podemos utilizar análise de variância (ANOVA).</p>
+</div>
+<div id="análise-de-variância-para-um-fator" class="section level2" number="5.4">
+<h2>
+<span class="header-section-number">5.4</span> Análise de Variância para um fator<a class="anchor" aria-label="anchor" href="#an%C3%A1lise-de-vari%C3%A2ncia-para-um-fator"><i class="fas fa-link"></i></a>
+</h2>
+<p>Análise de variância (ANOVA) é um modelo linear, pois a variável resposta é modelada como uma função linear dos parâmetros. Utilizado para a análise entre grupos e dentre grupos, o modelo realiza contrastes entre classes, resultando na comparação entre as médias de tratamentos.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{H}_0 &amp;: \ \mu_1 = \mu_2 = \cdots = \mu_k \\
+\text{H}_1 &amp;: \ \mu_i \ne \mu_j \ \text{para algum par}\  \ i,j 
+\end{aligned}
+\]</span></p>
+<ul>
+<li>Pressupostos
+<ul>
+<li>Amostras independentes</li>
+<li>Normalidade dos resíduos</li>
+<li>Homocedasticidade</li>
+<li>Sensível a outliers</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<ul>
+<li>“O interrogatório habilidoso da natureza”: O experimento de Fisher"
+<ul>
+<li>Teste F</li>
+<li>Comparaçã de médias: Teste de Tukey</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<blockquote>
+<p>Um conjunto de procedimentos que têm como base a comparação entre variâncias com o propósito de verificar em que medida as diferenças nas médias de respostas de grupos diferentes são estatisticamente significativas (Tabachnick &amp; Fidell, 2019).</p>
+</blockquote>
+<p><br></p>
+<p>A especificação do modelo é dada por:</p>
+<p><span class="math display">\[y_{ij} = \mu + \tau_i + \epsilon_{ij}\]</span>
+em que <span class="math inline">\(\mu\)</span> representa a média geral, <span class="math inline">\(\tau_i\)</span> representa o <span class="math inline">\(i\)</span>-ésimo efeito de tratamento e <span class="math inline">\(\epsilon_{ij}\)</span> representa o erro aleatório.</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simula</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mu</span>, <span class="va">t1</span>, <span class="va">t2</span>, <span class="va">sigma</span>, <span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+  
+  <span class="va">y1</span> <span class="op">&lt;-</span> <span class="va">mu</span> <span class="op">+</span> <span class="va">t1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0</span>, <span class="va">sigma</span><span class="op">)</span>
+  <span class="va">y2</span> <span class="op">&lt;-</span> <span class="va">mu</span> <span class="op">+</span> <span class="va">t2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0</span>, <span class="va">sigma</span><span class="op">)</span>
+  <span class="va">y3</span> <span class="op">&lt;-</span> <span class="va">mu</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0</span>, <span class="va">sigma</span><span class="op">)</span>
+  
+  <span class="va">yy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y2</span>, <span class="va">y3</span><span class="op">)</span>
+  
+  <span class="va">trat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">n</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">n</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>
+  
+  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">yy</span>,
+                   trat <span class="op">=</span> <span class="va">trat</span><span class="op">)</span>
+  
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>dados <span class="op">=</span> <span class="va">df</span><span class="op">)</span><span class="op">)</span>
+  
+<span class="op">}</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+<span class="va">sim_df</span> <span class="op">&lt;-</span> <span class="fu">simula</span><span class="op">(</span>mu <span class="op">=</span> <span class="fl">10</span>, t1 <span class="op">=</span> <span class="fl">5</span>, t2 <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, sigma <span class="op">=</span> <span class="fl">5</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="bookdown-demo_files/figure-html/unnamed-chunk-30-1.png" width="672"></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">car</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/car/man/leveneTest.html">leveneTest</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">trat</span>, data <span class="op">=</span> <span class="va">sim_df</span><span class="op">$</span><span class="va">dados</span><span class="op">)</span></code></pre></div>
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(&gt;F)
+group  2   5e-04 0.9995
+      27               </code></pre>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">trat</span>, data <span class="op">=</span> <span class="va">sim_df</span><span class="op">$</span><span class="va">dados</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></code></pre></div>
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+trat         2  488.7  244.34   10.27 0.000481 ***
+Residuals   27  642.1   23.78                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">mod</span><span class="op">$</span><span class="va">residuals</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  mod$residuals
+## W = 0.96213, p-value = 0.3507</code></pre>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></code></pre></div>
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = y ~ trat, data = sim_df$dados)
+
+$trat
+         diff        lwr       upr     p adj
+B-A -9.330018 -14.737296 -3.922740 0.0006008
+C-A -7.495923 -12.903201 -2.088645 0.0052775
+C-B  1.834096  -3.573182  7.241374 0.6812485</code></pre>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD</a></span><span class="op">(</span><span class="va">mod</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>,las<span class="op">=</span><span class="fl">1</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="bookdown-demo_files/figure-html/unnamed-chunk-34-1.png" width="672"></div>
+</div>
+<div id="experimentos-randomizados-blocados" class="section level2" number="5.5">
+<h2>
+<span class="header-section-number">5.5</span> Experimentos Randomizados Blocados<a class="anchor" aria-label="anchor" href="#experimentos-randomizados-blocados"><i class="fas fa-link"></i></a>
+</h2>
+<p>Experimentos com bloco ocorrem quando há um fator conhecido e controlável, que pode ser responsável por algum tipo de intervenção na resposta.</p>
+<p>Imagine no exemplo anterior sobre plantas. Mas temos 3 fertilizantes, e metade das plantas estão em uma estufa e a outra metade a céu aberto. Talvez, esse fator possa exercer alguma influência nas médias observadas. Assim, adicionamos um fator de controle.</p>
+<p><span class="math display">\[y_{ijk} = \mu + \beta_j + \tau_i + \epsilon_{ijk}\]</span></p>
+<p>em que <span class="math inline">\(\beta_j\)</span> representa a área (estufa ou céu aberto). Assim, teríamos três tratamentos e dois blocos.</p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">bloco</span> <span class="op">+</span> <span class="va">trat</span>, data <span class="op">=</span> <span class="va">df_planta2</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">df_planta2</span><span class="op">$</span><span class="va">y</span>, <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">20</span><span class="op">:</span><span class="fl">25</span>, <span class="fl">40</span><span class="op">:</span><span class="fl">45</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>           y X.Intercept. blocoE tratB tratC
+1  11.796529            1      0     0     0
+2  14.346075            1      0     0     0
+3  11.921987            1      0     0     0
+4  12.813326            1      0     0     0
+5  13.124882            1      0     0     0
+20 13.858587            1      0     0     0
+21  7.915879            1      0     1     0
+22  9.376248            1      0     1     0
+23  6.203811            1      0     1     0
+24 16.506868            1      0     1     0
+25 13.623886            1      0     1     0
+40 10.647825            1      1     1     0
+41  6.279393            1      1     0     1
+42  4.114786            1      1     0     1
+43  7.685377            1      1     0     1
+44  7.634400            1      1     0     1
+45  7.464743            1      1     0     1</code></pre>
+</div>
+<div id="experimentos-fatoriais" class="section level2" number="5.6">
+<h2>
+<span class="header-section-number">5.6</span> Experimentos Fatoriais<a class="anchor" aria-label="anchor" href="#experimentos-fatoriais"><i class="fas fa-link"></i></a>
+</h2>
+<p>Um experimento completamente randomizado com dois fatores, pode ser representado por:</p>
+<p><span class="math display">\[y_{ijk} = \mu_{ij} + \epsilon_{ijk}\]</span>
+em que <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span> representam os níveis do primeiro e segundo fator, respectivamente, e <span class="math inline">\(k\)</span> denota a <span class="math inline">\(k\)</span>-ésima replicação. O modelo também pode ser escrito utilizando a representação dos efeitos, como:</p>
+<p><span class="math display">\[y_{ijk} = \mu + \alpha_i + \tau_j + \alpha\tau_{ij} + \epsilon_{ijk}\]</span>
+em que <span class="math inline">\(alpha_i\)</span> e <span class="math inline">\(beta_j\)</span> representam a diferença marginal da média total entre os experimentos, no <span class="math inline">\(i\)</span>-ésimo nível do primeiro fator e <span class="math inline">\(j\)</span>-ésimo nível do segundo fator. A interação <span class="math inline">\(\alpha\beta_{ij}\)</span> representa a diferença entre o valor principal e os efeitos marginais isolados.</p>
+</div>
+<div id="outros-modelos" class="section level2" number="5.7">
+<h2>
+<span class="header-section-number">5.7</span> Outros Modelos<a class="anchor" aria-label="anchor" href="#outros-modelos"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Repostas não-gaussianas.</p></li>
+<li><p>Quadrados Latinos.</p></li>
+<li><p>Confundimento.</p></li>
+<li><p>Medidas repetidas.</p></li>
+</ul>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="methods.html"><span class="header-section-number">4</span> Methods</a></div>
+<div class="next"><a href="final-words.html"><span class="header-section-number">6</span> Final Words</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#hypothesis-testing"><span class="header-section-number">5</span> Hypothesis Testing</a></li>
+<li><a class="nav-link" href="#conceitos"><span class="header-section-number">5.1</span> Conceitos</a></li>
+<li><a class="nav-link" href="#an%C3%A1lise-de-experimentos"><span class="header-section-number">5.2</span> Análise de Experimentos</a></li>
+<li><a class="nav-link" href="#experimentos-completamente-randomizados"><span class="header-section-number">5.3</span> Experimentos completamente randomizados</a></li>
+<li><a class="nav-link" href="#an%C3%A1lise-de-vari%C3%A2ncia-para-um-fator"><span class="header-section-number">5.4</span> Análise de Variância para um fator</a></li>
+<li><a class="nav-link" href="#experimentos-randomizados-blocados"><span class="header-section-number">5.5</span> Experimentos Randomizados Blocados</a></li>
+<li><a class="nav-link" href="#experimentos-fatoriais"><span class="header-section-number">5.6</span> Experimentos Fatoriais</a></li>
+<li><a class="nav-link" href="#outros-modelos"><span class="header-section-number">5.7</span> Outros Modelos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-04-19.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

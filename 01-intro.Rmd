@@ -1,10 +1,6 @@
 # Introduction {#intro}
 
-This material is under constant development and will be used to show fundamental concepts of data science.
-
-Example:
-
-Operational Risk. Loss Distribution Approach.
+Muitas vezes, é de nosso interesse comparar parâmetros entre grupos.
 
 Creating sequence of dates. Simulated values will be regarded to a weekly period of time.
 

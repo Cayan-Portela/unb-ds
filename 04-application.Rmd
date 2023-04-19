@@ -1,7 +1,389 @@
-# Applications
+# Hypothesis Testing
 
-Some _significant_ applications are demonstrated in this chapter.
+## Alguns Conceitos 
 
-## Example one
 
-## Example two
+> **População**: conjunto de observações de interesse. Em geral, não temos acesso à todos os elementos da população. (recursos escassos ou população infinita)
+ 
+ Dessa maneira, o conhecimento adquirido em relação à população de interesse é feito exaimando apenas alguns elementos da população.
+
+
+
+ >  **Amostra Aleatória Simples (A.A.S.)**:  Nesse tipo de amostragem, cada elemento tem a mesma probabilidade de ser incluído na amostra.
+
+ Ao selecionar uma amostra aleatória de tamanho $n$, obtemos um vetor aleatório $(x_1, x_2, ..., x_n)$. Com o vetor aleatória, podemos calcular a média amostral $\bar{x}$.
+ A média amostral $\bar{x}$ também é uma variável aleatória, pois seu valor varia de amostra para amostra. As medidas geradas por valores amostrais são estatísticas.
+
+
+
+> **Parâmetro**: Medida de uma característic da população (não é uma v.a.). Em geral, representada por $\theta$.
+
+
+> **Estatística**: Característica associada aos dados de uma amostra. É uma função das variáveis aleatórias que constituem uma amostra. É portanto, uma variável aelatória. 
+
+
+
+> **Estimador**: É uma estatística construída com a finalidade de representar, ou estimar, o parâmetro de interesse na população. As estimativas são os valores numéricos assumidos pelos estimadores, usualmente denotados por $\hat{\theta}$.
+
+
+## Análise de Experimentos
+
+Em experimentos, nos referimos à investigações em que o pesquisador possuir controle sob as condições de interesse, tornando viável a inferência sobre relações de causa e efeito. 
+Pode-se definir experimento como um série de rodadas em que mudanças propositais são realizadas nas variáveis de _input_ para poder verificar possíveis alterações na variávei resposta (Montgomery, 2013).
+
+-   Tratamentos: "intervenções" de interesse.
+-   Unidades experimentais: menor subdivisão do experimento a que o tratamento é atribuído.
+-   Respostas: medida de interesse observada na unidade experimental.
+
+- Príncipios da Análise de Experimentos.
+  + Randomização
+  + Replicação 
+  + Blocagem 
+
+Randomização corresponde à aleatoriedade na alocação  de tratamentos em unidades experimentaise nas rodadas do experimento. Em geral, isso valida os pressupostos de independência de métodos estatísticos.
+
+Replicação corresponde à rodadas independentes em cada combinação de tratamentos/fatores. Permite obter uma estimativa do erro experimental, consequentemente dos parâmetros (importante na comparação entre tratamentos).
+
+Blocagem é utilizado para reduzir a variabilidade relativa à ruídos; fatores que podem influenciar a resposta observada na unidade exeprimental, mas em que não temos interesse direto.
+
+## Experimentos completamente randomizados
+
+A idéia de experimentos completamente randomizados é que a escolha do tratamento a ser atribuído para a $i$-ésima observação seja aleatória.
+
+Por exemplo, caso deseja-se realizar um experimento que compare duas marcas de fertilizantes "A" e "B", referente ao crescimento das plantas. Nesse caso, imagine que temos 10 plantas, dispostas em um mesmo terreno, plantadas em um mesmo determinado tempo, sob as mesmas condições:
+
+
+| P1 | P2 | P3 | P4 | P5 |
+|:---:|:---:|:---:|:---:|:---:|
+| P6 | P7 | P8 | P9 | P10 |
+
+Queremos então, que os tratamentos "A" e "B" (referntes aos fertilizantes), sejam atribuídos aleatoriamente às plantas.
+
+```{r, echo=FALSE, message=F}
+library(dplyr)
+library(ggplot2)
+```
+
+```{r, comment=""}
+trat1 <- rep(c("A", "B"), each = 5)
+trat1
+
+set.seed(123)
+sample(trat1, 10)
+```
+
+```{r, comment=""}
+set.seed(123)
+df_planta <- tibble(planta = paste0("P", 1:10),
+                    trat   = sample(trat1, 10))
+
+df_planta
+```
+
+Digamos então, que o experimento foi realizado, e os seguintes valores referentes ao crescimento da planta (em cm), foram observados:
+
+```{r, comment=""}
+df_planta <- df_planta %>%
+  mutate(y_cm = c(14.22, 5.59, 15.41, 10.34, 9.73,
+                  12.32, 16.15, 10.80, 15.29, 12.44 ) )
+
+df_planta
+```
+
+Observando o box-plot abaixo, o tratamento "A" parece ter fornecido um maior impulsionamento no crescimento das plantas, em relação ao tratamento "B".
+
+```{r, comment=""}
+tapply(df_planta$y_cm, df_planta$trat, mean)
+
+ggplot(df_planta, 
+       aes(x = trat, y = y_cm, fill = trat)) +
+  geom_boxplot()
+```
+
+Vamos osbervar então, como foi a diferença das médias entre tratamentos:
+
+```{r, comment=""}
+  df_planta %>%
+    group_by(trat) %>%
+    summarise(media = mean(y_cm)) %>%
+    .$media %>%
+    dist()
+```
+
+Porém, supondo não haver diferença entre os tratamentos, e que ambos tenham a mesma distribuição, o quão "raro" seria observar exatamente essa diferença?
+
+O número de combinações possíveis é de ${10\choose 5} = 252$
+```{r, comment = ""}
+choose(10, 5)
+```
+
+Dentre todas as combinações possíveis, podemos analisar a distirbuição de diferenças de médias, considerando os dados observados.
+
+```{r, comment=""}
+y1 <- df_planta$y_cm
+
+medias <- combn(y1, m = 5)
+
+N = choose(10, 5)
+dif_media <- rep(NA, N)
+
+  for(i in 1:N) {
+    dif_media[i] <- mean(medias[,i]) - mean(setdiff(y1, medias[,i]))   
+  }
+
+```
+
+```{r, comment= "", message=FALSE}
+p1 <- ggplot() +
+    geom_histogram(aes(dif_media),
+                   fill = "cyan4",
+                   col = "white",
+                   bins = 30) +
+    geom_vline(xintercept = c(quantile(dif_media, 0.025),
+                              quantile(dif_media, 0.975)),
+               col = "firebrick",
+               linetype = "dashed") +
+    geom_point(x = 4.946, y = 0, size = 1.5, col = "purple") +
+    theme_minimal()
+p1
+```
+
+
+
+A partir daí, podemos ter a ideia de que, dado a suposição de que não há diferença entre as médias, o resultado observado é um tanto quanto raro. Com esse conceito, temos então, indícios de que a suposição de igualdade entre as distribuições das médias não seja o que de fato ocorre.
+
+Assumindo independência entre as observações, temos que as observações possuem a mesma probabilidade de receber certo tratamento. Então, a probabilidade de observamos um valor maior ou tão extremo quanto o observado, é dada por:
+
+\[ P( X \ge x | H_0) = \sum_{i=1}^{N\choose k} \frac{I(x_i \le x*)}{N\choose k}\]
+
+No exemplo, podemos calcular:
+```{r, comment=""}
+sum(dif_media >= 4.946) / N
+```
+
+E no caso bilateral:
+```{r, comment=""}
+2*sum(dif_media >= 4.946) / N
+```
+
+```{r, comment="", echo=FALSE}
+p1 +   
+  geom_point(aes(x = 4.946, y = 0.5),
+             col = "deeppink2",
+             size = 4)
+```
+
+E se ao invés de cinco replicações por tratamento, tivéssemos 10?
+
+```{r, comment="", echo=FALSE}
+n2 = 10
+
+set.seed(123)
+ta_10 <- 10 + 5 + rnorm(n2, 0, 3)
+tb_10 <- 10 + rnorm(n2, 0, 3)
+
+y2 <- c(ta_10, tb_10)
+
+medias_n2 <- combn(y2, m = 10) 
+
+N2 = choose(20, 10)
+
+dif_media2 <- rep(NA, N2)
+
+  for(i in 1:N2) {
+    dif_media2[i] <- mean(medias_n2[,i]) - mean(setdiff(y2, medias_n2[,i]))   
+  }
+
+```
+
+```{r, comment= "", message=FALSE, echo=FALSE}
+p2 <- ggplot() +
+    geom_histogram(aes(dif_media2),
+                   fill = "cyan4",
+                   col = "white",
+                   bins = 30) +
+    geom_vline(xintercept = c(quantile(dif_media2, 0.025),
+                              quantile(dif_media2, 0.975)),
+               col = "firebrick",
+               linetype = "dashed") +
+    labs(title = "10 replicações por tratamento") +
+    theme_minimal()
+p2
+```
+
+E se fossem 20?
+
+```{r, comment="", echo=FALSE, error=TRUE}
+
+ta_20 <- 10 + 5 + rnorm(20, 0, 3)
+tb_20 <- 10 + rnorm(20, 0, 3)
+
+y3 <- c(ta_20, tb_20)
+
+medias_n3 <- combn(y3, m = 10)
+
+```
+
+O número de combinações torna-se muito grande ${20\choose 10} = 184756$
+
+Por outro lado, se tivéssemos apenas duas replicações, o número de combinações seria de apenas 6.
+
+Assim, a replicação permite uma maior robustez quanto à estimativa da possível variabilidade presente no fenômeno. Como em algum certo ponto é inviável simularmos todas as possíveis ocorrências do fenômeno, recorremos à distribuições de probabilidade que modelam o processo gerador de dados.
+
+
+Para comparar a média dos dois tratamentos, podemos utilizar o teste-t para variâncias iguais.
+```{r, comment=""}
+t.test(df_planta$y_cm[df_planta$trat == "A"],
+       df_planta$y_cm[df_planta$trat == "B"],
+       var.equal = TRUE)
+```
+
+Que é equivalente ao resultado da anova, pois $t_v^2 = F_{1,v}$.
+
+```{r, comment=""}
+aov(y_cm ~ trat, data = df_planta) %>%
+  summary()
+
+3.8129^2
+```
+
+- Mas o que representam esses resultados?
+
+Para avaliar a diferença entre a média de dois ou mais tratmentos, podemos utilizar análise de variância (ANOVA).
+
+## Análise de Variância para um fator
+
+Análise de variância (ANOVA) é um modelo linear, pois a variável resposta é modelada como uma função linear dos parâmetros. Utilizado para a análise entre grupos e dentre grupos, o modelo realiza contrastes entre classes, resultando na comparação entre as médias de tratamentos.
+
+$$
+\begin{aligned}
+\text{H}_0 &: \ \mu_1 = \mu_2 = \cdots = \mu_k \\
+\text{H}_1 &: \ \mu_i \ne \mu_j \ \text{para algum par}\  \ i,j 
+\end{aligned}
+$$
+
+* Pressupostos
+  + Amostras independentes
+  + Normalidade dos resíduos
+  + Homocedasticidade
+  + Sensível a outliers
+
+<br>
+
+* “O interrogatório habilidoso da natureza”: O experimento de Fisher"
+  + Teste F
+  + Comparaçã de médias: Teste de Tukey
+
+<br>
+
+> Um conjunto de procedimentos que têm como base a comparação entre variâncias com o propósito de verificar em que medida as diferenças nas médias de respostas de grupos diferentes são estatisticamente significativas (Tabachnick & Fidell, 2019).
+
+<br>
+
+A especificação do modelo é dada por:
+
+$$y_{ij} = \mu + \tau_i + \epsilon_{ij}$$
+em que $\mu$ representa a média geral, $\tau_i$ representa o $i$-ésimo efeito de tratamento e $\epsilon_{ij}$ representa o erro aleatório.
+
+
+
+```{r, comment = ""}
+simula <- function(mu, t1, t2, sigma, n) {
+  
+  y1 <- mu + t1 + rnorm(n, 0, sigma)
+  y2 <- mu + t2 + rnorm(n, 0, sigma)
+  y3 <- mu + rnorm(n, 0, sigma)
+  
+  yy <- c(y1, y2, y3)
+  
+  trat <- as.factor( c(rep(LETTERS[1], n), rep(LETTERS[2], n), rep(LETTERS[3], n)) )
+  
+  df <- data.frame(y = yy,
+                   trat = trat)
+  
+  return(list(dados = df))
+  
+}
+
+```
+
+```{r, comment=""}
+set.seed(123)
+sim_df <- simula(mu = 10, t1 = 5, t2 = -5, sigma = 5, n = 10)
+```
+
+```{r, echo=FALSE}
+ggplot(sim_df$dados, 
+       aes(x = trat, y = y, fill = trat)) +
+  geom_boxplot()
+```
+
+```{r, comment=""}
+car::leveneTest(y ~ trat, data = sim_df$dados)
+```
+
+```{r, comment=""}
+mod <- aov(y ~ trat, data = sim_df$dados)
+summary(mod)
+```
+
+```{r, coment=""}
+shapiro.test(mod$residuals)
+```
+
+```{r, comment=""}
+TukeyHSD(mod)
+plot(TukeyHSD(mod, conf.level = 0.95),las=1, col = "red")
+```
+
+
+
+
+
+
+## Experimentos Randomizados Blocados
+
+Experimentos com bloco ocorrem quando há um fator conhecido e controlável, que pode ser responsável por algum tipo de intervenção na resposta.
+
+Imagine no exemplo anterior sobre plantas. Mas temos 3 fertilizantes, e metade das plantas estão em uma estufa e a outra metade a céu aberto. Talvez, esse fator possa exercer alguma influência nas médias observadas. Assim, adicionamos um fator de controle.
+
+$$y_{ijk} = \mu + \beta_j + \tau_i + \epsilon_{ijk}$$
+
+em que $\beta_j$ representa a área (estufa ou céu aberto). Assim, teríamos três tratamentos e dois blocos.
+
+
+```{r, comment="", echo=FALSE}
+
+tc_20 <- 10 - 5 + rnorm(20, 0, 3)
+
+df_planta2 <- data.frame(trat = rep(c("A", "B", "C"), each = 20 ),
+                         bloco = rep(c("C", "E"), each = 30),
+                         y = c(ta_20, tb_20, tc_20) )
+```
+
+```{r, comment=""}
+mod2 <- aov(y ~ bloco + trat, data = df_planta2)
+data.frame(y = df_planta2$y, model.matrix(mod2) ) %>%
+  slice(c(1:5, 20:25, 40:45))
+```
+
+## Experimentos Fatoriais
+
+Um experimento completamente randomizado com dois fatores, pode ser representado por:
+
+$$y_{ijk} = \mu_{ij} + \epsilon_{ijk}$$
+em que $i$ e $j$ representam os níveis do primeiro e segundo fator, respectivamente, e $k$ denota a $k$-ésima replicação. O modelo também pode ser escrito utilizando a representação dos efeitos, como:
+
+$$y_{ijk} = \mu + \alpha_i + \tau_j + \alpha\tau_{ij} + \epsilon_{ijk}$$
+em que $alpha_i$ e $beta_j$ representam a diferença marginal da média total entre os experimentos, no $i$-ésimo nível do primeiro fator e $j$-ésimo nível do segundo fator. A interação $\alpha\beta_{ij}$ representa a diferença entre o valor principal e os efeitos marginais isolados.
+
+## Outros Modelos
+
+- Repostas não-gaussianas.
+
+- Quadrados Latinos.
+
+- Confundimento.
+
+- Medidas repetidas.
+
