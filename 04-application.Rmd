@@ -1,5 +1,8 @@
 # Hypothesis Testing
 
+Em situações em que estamos interessados em testar afirmações sobre determinado parâmetro desconhecido. O parâmetro representa uma medida de interesse do estudo, levando à formulação de uma hipótese.
+Com a hipótese formulada, utilizamos metodologias estatísticas para nos auxiliar em tomadas de decisões.
+
 ## Alguns Conceitos 
 
 
