@@ -6,7 +6,7 @@ methods
 lei-dos-grandes-números
 teorema-do-limite-central
 hypothesis-testing
-conceitos
+alguns-conceitos
 análise-de-experimentos
 experimentos-completamente-randomizados
 análise-de-variância-para-um-fator
