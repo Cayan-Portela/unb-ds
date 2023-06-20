@@ -13,5 +13,5 @@ análise-de-variância-para-um-fator
 experimentos-randomizados-blocados
 experimentos-fatoriais
 outros-modelos
-final-words
+otimização
 other-considerations

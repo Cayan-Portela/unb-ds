@@ -1,0 +1,3 @@
+# Otimização
+
+Material de otimização numérica.
