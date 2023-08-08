@@ -5,7 +5,7 @@ literature
 methods
 lei-dos-grandes-números
 teorema-do-limite-central
-hypothesis-testing
+teste-de-hipóteses
 alguns-conceitos
 análise-de-experimentos
 experimentos-completamente-randomizados
@@ -14,4 +14,5 @@ experimentos-randomizados-blocados
 experimentos-fatoriais
 outros-modelos
 otimização
+estatística-e-machine-learning
 other-considerations

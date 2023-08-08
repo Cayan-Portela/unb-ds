@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 6 Otimização | UnB - Data Science</title>
 <meta name="author" content="Cayan Portela and Herbert Kimura">
-<meta name="description" content="Material de otimização numérica.">
+<meta name="description" content="6.1 Estatística e Machine Learning A abordagem estatística para análise e resumo de informações contidas em um conjunto de dados, consiste na suposição de que existe um mecanismo estocástico...">
 <meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Otimização | UnB - Data Science">
 <meta property="og:type" content="book">
-<meta property="og:description" content="Material de otimização numérica.">
+<meta property="og:description" content="6.1 Estatística e Machine Learning A abordagem estatística para análise e resumo de informações contidas em um conjunto de dados, consiste na suposição de que existe um mecanismo estocástico...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 6 Otimização | UnB - Data Science">
-<meta name="twitter:description" content="Material de otimização numérica.">
+<meta name="twitter:description" content="6.1 Estatística e Machine Learning A abordagem estatística para análise e resumo de informações contidas em um conjunto de dados, consiste na suposição de que existe um mecanismo estocástico...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -46,7 +46,7 @@
 <li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
 <li><a class="" href="literature.html"><span class="header-section-number">3</span> Literature</a></li>
 <li><a class="" href="methods.html"><span class="header-section-number">4</span> Methods</a></li>
-<li><a class="" href="hypothesis-testing.html"><span class="header-section-number">5</span> Hypothesis Testing</a></li>
+<li><a class="" href="teste-de-hip%C3%B3teses.html"><span class="header-section-number">5</span> Teste de Hipóteses</a></li>
 <li><a class="active" href="otimiza%C3%A7%C3%A3o.html"><span class="header-section-number">6</span> Otimização</a></li>
 <li><a class="" href="other-considerations.html"><span class="header-section-number">7</span> Other Considerations</a></li>
 <li><a class="" href="references.html">References</a></li>
@@ -61,15 +61,27 @@
 <h1>
 <span class="header-section-number">6</span> Otimização<a class="anchor" aria-label="anchor" href="#otimiza%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
 </h1>
+<div id="estatística-e-machine-learning" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> Estatística e Machine Learning<a class="anchor" aria-label="anchor" href="#estat%C3%ADstica-e-machine-learning"><i class="fas fa-link"></i></a>
+</h2>
+<p>A abordagem estatística para análise e resumo de informações contidas em um conjunto de dados, consiste na suposição de que existe um mecanismo estocástico gerador do processo em análise <span class="citation">(Bonat et al. <a href="references.html#ref-bonat2012metodos" role="doc-biblioref">2012</a>)</span>. Para isso, existem técnica que nos auxiliam na estimação de uma função (e.g. de regressão) que são de fundamental importância em estatística e machine learning.</p>
+<p>Muitas ténicas de regressão usadas hoje são datadas de muitos anos atrás. Todavia, com o avanço computacional, métodos mais robustos em relação ao real processo gerador vêm ganhando cada vez mais espaço e importância<span class="citation">(Izbicki and Santos <a href="references.html#ref-izbicki2020aprendizado" role="doc-biblioref">2020</a>)</span>. Por exemplo, em modelos com mais covariáveis que observações, métodos tradicionais sofrem pela falta de graus de liberdade.</p>
+<p>De maneira geral, nosso objetivo é determinar uma relação entre uma variável aleatória de interesse <span class="math inline">\(Y\)</span> e um vetor de covariáveis <span class="math inline">\(x = (x_1, ..., x_n)\)</span>. Então, temos que:</p>
+<p><span class="math display">\[ g(x) := E [ Y | X = x]\]</span></p>
 <p>Material de otimização numérica.</p>
 
 </div>
+</div>
   <div class="chapter-nav">
-<div class="prev"><a href="hypothesis-testing.html"><span class="header-section-number">5</span> Hypothesis Testing</a></div>
+<div class="prev"><a href="teste-de-hip%C3%B3teses.html"><span class="header-section-number">5</span> Teste de Hipóteses</a></div>
 <div class="next"><a href="other-considerations.html"><span class="header-section-number">7</span> Other Considerations</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#otimiza%C3%A7%C3%A3o"><span class="header-section-number">6</span> Otimização</a></li></ul>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#otimiza%C3%A7%C3%A3o"><span class="header-section-number">6</span> Otimização</a></li>
+<li><a class="nav-link" href="#estat%C3%ADstica-e-machine-learning"><span class="header-section-number">6.1</span> Estatística e Machine Learning</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -85,7 +97,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-06-20.</p>
+    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-08-08.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1,3 +1,16 @@
 # Otimização
 
+
+## Estatística e Machine Learning
+
+A abordagem estatística para análise e resumo de informações contidas em um conjunto de dados, consiste na suposição de que existe um mecanismo estocástico gerador do processo em análise [@bonat2012metodos]. Para isso, existem técnica que nos auxiliam na estimação de uma função (e.g. de regressão) que são de fundamental importância em estatística e machine learning.
+
+Muitas ténicas de regressão usadas hoje são datadas de muitos anos atrás. Todavia, com o avanço computacional, métodos mais robustos em relação ao real processo gerador vêm ganhando cada vez mais espaço e importância[@izbicki2020aprendizado]. Por exemplo, em modelos com mais covariáveis que observações, métodos tradicionais sofrem pela falta de graus de liberdade.
+
+De maneira geral, nosso objetivo é determinar uma relação entre uma variável aleatória de interesse $Y$ e um vetor de covariáveis $x = (x_1, ..., x_n)$. Então, temos que:
+
+$$ g(x) := E [ Y | X = x]$$ 
+
+
+
 Material de otimização numérica.
