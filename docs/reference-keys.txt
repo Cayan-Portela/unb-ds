@@ -14,5 +14,15 @@ experimentos-randomizados-blocados
 experimentos-fatoriais
 outros-modelos
 otimização
+álgebra-linear-alguns-conceitos.
+igualdade-de-matrizes
+matriz-transposta
+matriz-simétrica
+matriz-diagonal
+operações-com-matrizes
+inversa-de-uma-matriz
 estatística-e-machine-learning
+regressão-linear.
+como-achar-a-melhor-reta
+regressão-linear-múltipla
 other-considerations
