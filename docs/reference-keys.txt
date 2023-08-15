@@ -1,4 +1,12 @@
 tab:nice-tab
+eq:um
+eq:dois
+eq:tres
+eq:cinco
+eq:seis
+eq:sete
+eq:b0
+eq:b1
 about
 intro
 literature

@@ -212,7 +212,9 @@
 <span class="header-section-number">6.2.0.1</span> Regressão Linear.<a class="anchor" aria-label="anchor" href="#regress%C3%A3o-linear."><i class="fas fa-link"></i></a>
 </h4>
 <p>Apesar de simples, a regressão linear é um modelo de extrema importância. Um bom entendimento é resposável por fundamentos sólidos em conceitos de modelagem. Em um modelo de regressão linear, temos as seguintes definições:</p>
-<p><span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \epsilon_i\]</span></p>
+<p><span class="math display" id="eq:um">\[\begin{align}
+  y_i = \beta_0 + \beta_1 x_i + \epsilon_i \tag{6.1}
+\end{align}\]</span></p>
 <ul>
 <li><p><span class="math inline">\(y_i\)</span> é a variávei de dependente e <span class="math inline">\(x_i\)</span> é a variável explicativa.</p></li>
 <li><p><span class="math inline">\(\beta_0\)</span> e <span class="math inline">\(\beta_1\)</span> são os parâmetros a serem estimados pelo modelo.</p></li>
@@ -333,20 +335,44 @@
 <p>Minimzando a soma dos erros quadráticos:
 <span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \epsilon_i\]</span>
 <span class="math display">\[\epsilon_i = y_i - \beta_0 - \beta_1 x_i\]</span>
-<span class="math display">\[\epsilon_i^2 = (y_i - \beta_0 - \beta_1 x_i)^2\]</span></p>
-<p><span class="math display">\[\sum_{i = 1}^{n} \epsilon_i^{2} = \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2\]</span></p>
+<span class="math display">\[\epsilon_i^2 = (y_i - \beta_0 - \beta_1 x_i)^2\]</span>
+<span class="math display">\[\sum_{i = 1}^{n} \epsilon_i^{2} = \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2\]</span></p>
 <p>Temos então, nossa função de custo, que queremos minimzar:</p>
-<p><span class="math display">\[\sum_{i = 1}^{n} \epsilon_i^{2} = \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2\]</span></p>
+<p><span class="math display" id="eq:dois">\[\begin{align}
+  \sum_{i = 1}^{n} \epsilon_i^{2} = \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2 \tag{6.2}
+\end{align}\]</span></p>
 <div class="inline-figure">Como minimizar uma função?
 Derivando e igualando a zero. A derivada nos da a inclinação da reta tangente.
 <img src="images/simple_tangent_graph.png">
 </div>
 <p>Devemos fazer as derivadas parciais da função de custo (L). Em relação a <span class="math inline">\(\beta_0\)</span> e em relação a <span class="math inline">\(\beta_1\)</span>.</p>
 <p><span class="math display">\[L = \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2\]</span>
-<span class="math display">\[\frac{\partial L}{\partial \beta_0} = -2 \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)\]</span>
-<span class="math display">\[\frac{\partial L}{\partial \beta_1} = -2 \sum_{i=1}^{n} x_i(y_i - \beta_0 - \beta_1 x_i)\]</span>
-<span class="math display">\[\hat{\beta_0} = \bar{y} - \hat{\beta_1}\bar{x}\]</span>
-<span class="math display">\[\hat{\beta_1} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^2}\]</span></p>
+<span class="math display" id="eq:tres">\[\begin{align}
+\frac{\partial L}{\partial \beta_0} = -2 \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i) \tag{6.3}
+\end{align}\]</span></p>
+<p><span class="math display" id="eq:cinco">\[\begin{align}
+\frac{\partial L}{\partial \beta_1} = -2 \sum_{i=1}^{n} x_i(y_i - \beta_0 - \beta_1 x_i) \tag{6.4}
+\end{align}\]</span></p>
+<p>Igualando <span class="math inline">\(\frac{\partial L}{\partial \beta_0} = 0\)</span> e <span class="math inline">\(\frac{\partial L}{\partial \beta_1} = 0\)</span>, obtemos as equações:</p>
+<p><span class="math display" id="eq:seis">\[\begin{align}
+  \sum_{i=1}^{n} (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0  \rightarrow n \hat{\beta}_0 + \hat{\beta}_1 \sum_{i=1}^{n} x_i = \sum_{i=1}^{n} y_i \tag{6.5}
+\end{align}\]</span></p>
+<p><span class="math display" id="eq:sete">\[\begin{align}
+  \sum_{i=1}^{n} x_i(y_i - \beta_0 - \beta_1 x_i) = 0   \rightarrow \hat{\beta}_0 \sum_{i=1}^{n} x_i + \hat{\beta}_1 \sum_{i=1}^{n} x_i^2 = \sum_{i=1}^{n} x_i y_i \tag{6.6}
+\end{align}\]</span></p>
+<p>De <a href="otimiza%C3%A7%C3%A3o.html#eq:seis">(6.5)</a> temos então:</p>
+<p><span class="math display" id="eq:b0">\[\begin{align}
+\hat{\beta_0} = \bar{y} - \hat{\beta_1}\bar{x}
+\tag{6.7}
+\end{align}\]</span></p>
+<p>Substituindo <a href="otimiza%C3%A7%C3%A3o.html#eq:b0">(6.7)</a> em <a href="otimiza%C3%A7%C3%A3o.html#eq:sete">(6.6)</a>, temos:</p>
+<p><span class="math display">\[
+\hat{\beta_1}  = \frac{\sum_{i=1}^{n} x_i y_i - \frac{1}{n}\sum_{i=1}^{n}x_i \sum_{i=1}^{n} y_i  }{\sum_{i=1}^{n}x^2 - \frac{1}{n} (\sum_{i=1}^{n}x_i)^2} = 
+\frac{n \sum_{i=1}^{n} x_i y_i - \sum_{i=1}^{n} x_i \sum_{i=1}^{n} y_i}{n \sum_{i=1}^{n} x_i^2 - (\sum_{i=1}^{n} x_i)^2}
+\]</span></p>
+<p><span class="math display" id="eq:b1">\[\begin{align}
+\hat{\beta_1} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^2} \tag{6.8}
+\end{align}\]</span></p>
 <hr>
 <p>Exercício. Fazer “na mão”, comparando com o resultado da função lm().</p>
 </div>
@@ -417,7 +443,7 @@ Então,</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-08-08.</p>
+    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-08-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

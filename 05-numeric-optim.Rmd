@@ -146,7 +146,9 @@ $$ g(x) := E [ Y | X = x]$$
 
 Apesar de simples, a regressão linear é um modelo de extrema importância. Um bom entendimento é resposável por fundamentos sólidos em conceitos de modelagem. Em um modelo de regressão linear, temos as seguintes definições:
 
-$$y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
+\begin{align}
+  y_i = \beta_0 + \beta_1 x_i + \epsilon_i (\#eq:um)
+\end{align}
 
 - $y_i$ é a variávei de dependente e $x_i$ é a variável explicativa.
 
@@ -184,12 +186,14 @@ Minimzando a soma dos erros quadráticos:
 $$y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
 $$\epsilon_i = y_i - \beta_0 - \beta_1 x_i$$
 $$\epsilon_i^2 = (y_i - \beta_0 - \beta_1 x_i)^2$$
-
 $$\sum_{i = 1}^{n} \epsilon_i^{2} = \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2$$
 
 Temos então, nossa função de custo, que queremos minimzar:
 
-$$\sum_{i = 1}^{n} \epsilon_i^{2} = \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2$$
+\begin{align}
+  \sum_{i = 1}^{n} \epsilon_i^{2} = \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2 (\#eq:dois)
+\end{align}
+
 
 Como minimizar uma função?
 Derivando e igualando a zero. A derivada nos da a inclinação da reta tangente.
@@ -198,10 +202,43 @@ Derivando e igualando a zero. A derivada nos da a inclinação da reta tangente.
 Devemos fazer as derivadas parciais da função de custo (L). Em relação a $\beta_0$ e em relação a $\beta_1$.
 
 $$L = \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2$$
-$$\frac{\partial L}{\partial \beta_0} = -2 \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)$$
-$$\frac{\partial L}{\partial \beta_1} = -2 \sum_{i=1}^{n} x_i(y_i - \beta_0 - \beta_1 x_i)$$
-$$\hat{\beta_0} = \bar{y} - \hat{\beta_1}\bar{x}$$
-$$\hat{\beta_1} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^2}$$
+\begin{align}
+\frac{\partial L}{\partial \beta_0} = -2 \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i) (\#eq:tres)
+\end{align}
+
+\begin{align}
+\frac{\partial L}{\partial \beta_1} = -2 \sum_{i=1}^{n} x_i(y_i - \beta_0 - \beta_1 x_i) (\#eq:cinco)
+\end{align}
+
+
+Igualando $\frac{\partial L}{\partial \beta_0} = 0$ e $\frac{\partial L}{\partial \beta_1} = 0$, obtemos as equações:
+
+\begin{align}
+  \sum_{i=1}^{n} (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0	\rightarrow n \hat{\beta}_0 + \hat{\beta}_1 \sum_{i=1}^{n} x_i = \sum_{i=1}^{n} y_i (\#eq:seis)
+\end{align}
+
+\begin{align}
+  \sum_{i=1}^{n} x_i(y_i - \beta_0 - \beta_1 x_i) = 0	\rightarrow \hat{\beta}_0 \sum_{i=1}^{n} x_i + \hat{\beta}_1 \sum_{i=1}^{n} x_i^2 = \sum_{i=1}^{n} x_i y_i (\#eq:sete)
+\end{align}
+
+De \@ref(eq:seis) temos então:
+
+\begin{align}
+\hat{\beta_0} = \bar{y} - \hat{\beta_1}\bar{x}
+(\#eq:b0)
+\end{align}
+
+Substituindo \@ref(eq:b0) em \@ref(eq:sete), temos:
+
+$$
+\hat{\beta_1}  = \frac{\sum_{i=1}^{n} x_i y_i - \frac{1}{n}\sum_{i=1}^{n}x_i \sum_{i=1}^{n} y_i  }{\sum_{i=1}^{n}x^2 - \frac{1}{n} (\sum_{i=1}^{n}x_i)^2} = 
+\frac{n \sum_{i=1}^{n} x_i y_i - \sum_{i=1}^{n} x_i \sum_{i=1}^{n} y_i}{n \sum_{i=1}^{n} x_i^2 - (\sum_{i=1}^{n} x_i)^2}
+$$
+
+\begin{align}
+\hat{\beta_1} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^2} (\#eq:b1)
+\end{align}
+
 
 ---
 Exercício. Fazer "na mão", comparando com o resultado da função lm().
