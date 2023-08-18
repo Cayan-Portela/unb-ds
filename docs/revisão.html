@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Revisão | UnB - Data Science</title>
+<meta name="author" content="Cayan Portela and Herbert Kimura">
+<meta name="description" content="Nesta seção revisaremos brevemente alguns conceitos relacionados ao nosso curso.  3.1 Álgebra Linear: alguns conceitos.  3.1.1 Matriz Matriz é um arranjo retangular (duas dimensões),de números ou...">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Revisão | UnB - Data Science">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Nesta seção revisaremos brevemente alguns conceitos relacionados ao nosso curso.  3.1 Álgebra Linear: alguns conceitos.  3.1.1 Matriz Matriz é um arranjo retangular (duas dimensões),de números ou...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Revisão | UnB - Data Science">
+<meta name="twitter:description" content="Nesta seção revisaremos brevemente alguns conceitos relacionados ao nosso curso.  3.1 Álgebra Linear: alguns conceitos.  3.1.1 Matriz Matriz é um arranjo retangular (duas dimensões),de números ou...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">UnB - Data Science</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> About</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="active" href="revis%C3%A3o.html"><span class="header-section-number">3</span> Revisão</a></li>
+<li><a class="" href="methods.html"><span class="header-section-number">4</span> Methods</a></li>
+<li><a class="" href="teste-de-hip%C3%B3teses.html"><span class="header-section-number">5</span> Teste de Hipóteses</a></li>
+<li><a class="" href="otimiza%C3%A7%C3%A3o.html"><span class="header-section-number">6</span> Otimização</a></li>
+<li><a class="" href="other-considerations.html"><span class="header-section-number">7</span> Other Considerations</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="revisão" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Revisão<a class="anchor" aria-label="anchor" href="#revis%C3%A3o"><i class="fas fa-link"></i></a>
+</h1>
+<p>Nesta seção revisaremos brevemente alguns conceitos relacionados ao nosso curso.</p>
+<div id="álgebra-linear-alguns-conceitos." class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Álgebra Linear: alguns conceitos.<a class="anchor" aria-label="anchor" href="#%C3%A1lgebra-linear-alguns-conceitos."><i class="fas fa-link"></i></a>
+</h2>
+<div id="matriz" class="section level3" number="3.1.1">
+<h3>
+<span class="header-section-number">3.1.1</span> Matriz<a class="anchor" aria-label="anchor" href="#matriz"><i class="fas fa-link"></i></a>
+</h3>
+<p>Matriz é um arranjo retangular (duas dimensões),de números ou variáveis, em linhas e colunas.</p>
+<p><span class="math display">\[ \boldsymbol{A} = \begin{bmatrix}10 &amp; 12\\21 &amp; 39\end{bmatrix}\]</span>
+<span class="math display">\[ \boldsymbol{B} = \begin{bmatrix}1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1\\10 &amp; 12 &amp; 15 &amp; 13 &amp; 14 &amp; 16\end{bmatrix}\]</span></p>
+<p>Para representar os elements da matriz como variáveis, usamos o índice linha por coluna. Dessa maneira, <span class="math inline">\(x_{ij}\)</span> representa o elemento <span class="math inline">\(x\)</span> correspondente à <span class="math inline">\(i\)</span>-ésima linha e <span class="math inline">\(j\)</span>-ésima coluna:</p>
+<p><span class="math display">\[ \boldsymbol{X} = (x_{ij}) =\begin{bmatrix}x_{11} &amp; x_{12} &amp; x_{13}\\x_{21} &amp; x_{22} &amp; x_{23}\\x_{31} &amp; x_{32} &amp; x_{33}\\x_{41} &amp; x_{42} &amp; x_{43}\end{bmatrix}\]</span></p>
+<p>Usualmente, denotamos uma matriz genérica por <span class="math inline">\(n\)</span> linhas e <span class="math inline">\(p\)</span> colunas. A matriz acima, poussui <span class="math inline">\(n = 4\)</span> linhas e <span class="math inline">\(p = 3\)</span> colunas.</p>
+<p>Um vetor é uma matriz com uma dimensão igual a 1. Geralmente, o termo vetor esa associado a um vetor coluna. Um vetor linha é representado como o transposto do vetor coluna.</p>
+<p><span class="math display">\[y' = y^t =\begin{bmatrix}y_1 &amp; y_2 &amp; y_3\end{bmatrix}\]</span></p>
+<p>Duas matrizes (ou vetores) são equivalentes se possuem a mesma dimensão e todos os elementos são correspondentes.
+<span class="math display">\[\begin{bmatrix}3 &amp; -2 &amp; 4\\7 &amp; 1 &amp; 3\end{bmatrix} \neq \begin{bmatrix}3 &amp; -2 &amp; 4\\7 &amp; -4 &amp; 3\end{bmatrix}\]</span>
+<span class="math display">\[\begin{bmatrix}3 &amp; -2 &amp; 4\\7 &amp; 1 &amp; 3\end{bmatrix} = \begin{bmatrix}3 &amp; -2 &amp; 4\\7 &amp; 1 &amp; 3\end{bmatrix}\]</span></p>
+</div>
+<div id="matriz-transposta" class="section level3" number="3.1.2">
+<h3>
+<span class="header-section-number">3.1.2</span> Matriz Transposta<a class="anchor" aria-label="anchor" href="#matriz-transposta"><i class="fas fa-link"></i></a>
+</h3>
+<p>Uma matriz transposta é dada pela troca de posição entre linhas e colunas, ou seja, linhas se tornam colunas e colunas se tornam linhas. Denotamos por <span class="math inline">\(\boldsymbol{A'}\)</span> ou <span class="math inline">\(\boldsymbol{A}^t\)</span>. Formalmente, se <span class="math inline">\(\boldsymbol{A_{n \times p}} = a_{ij}\)</span>, sua transposta é dada por:</p>
+<p><span class="math display">\[\boldsymbol{A'_{p \times n}} = A^t = (a_{ij})' = (a_{ji})\]</span></p>
+<p><span class="math display">\[A = \begin{bmatrix}3 &amp; -2 &amp; 4\\ 7 &amp; 1 &amp; 3\end{bmatrix} \rightarrow A' = \begin{bmatrix}3 &amp; 7\\ -2 &amp; 1\\ 4 &amp; 3\end{bmatrix}\]</span></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">4</span>,</span>
+<span>                  <span class="fl">7</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>                byrow <span class="op">=</span> <span class="cn">TRUE</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">mat2</span></span></code></pre></div>
+<pre><code>     [,1] [,2] [,3]
+[1,]    3   -2    4
+[2,]    7    1    3</code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">mat2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>[1] 2 3</code></pre>
+</div>
+<div id="matriz-simétrica" class="section level3" number="3.1.3">
+<h3>
+<span class="header-section-number">3.1.3</span> Matriz Simétrica<a class="anchor" aria-label="anchor" href="#matriz-sim%C3%A9trica"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se a matriz transposta é quivalente à matriz original, ou seja, <span class="math inline">\(A' = A\)</span>, então dizemos que a matriz <span class="math inline">\(A\)</span> é uma matriz simétrica. Toda matriz simétrica é quadrada (número de linhas = número de colunas). Em uma matriz simétrica, <span class="math inline">\(a_{ij} = a_{ji}\)</span></p>
+<p><span class="math display">\[A = \begin{bmatrix}3 &amp; 8 &amp; 4\\ 8 &amp; 5 &amp; 9\\ 4 &amp; 9 &amp; 7\end{bmatrix}\]</span></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mat3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">8</span>, <span class="fl">4</span>,</span>
+<span>                  <span class="fl">8</span>, <span class="fl">5</span>, <span class="fl">9</span>,</span>
+<span>                  <span class="fl">4</span>, <span class="fl">9</span>, <span class="fl">7</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mat3</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">==</span> <span class="va">mat3</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span></span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div id="matriz-diagonal" class="section level3" number="3.1.4">
+<h3>
+<span class="header-section-number">3.1.4</span> Matriz Diagonal<a class="anchor" aria-label="anchor" href="#matriz-diagonal"><i class="fas fa-link"></i></a>
+</h3>
+<p>Todos os elementos fora da diagonal de uma matriz são zero.
+<span class="math display">\[A = \begin{bmatrix}3 &amp; 0 &amp; 0\\ 0 &amp; 5 &amp; 0\\ 0 &amp; 0 &amp; 7\end{bmatrix}\]</span></p>
+<p>Com a função <code><a href="https://rdrr.io/r/base/diag.html">diag()</a></code> podemos criar uma matriz diagonal ou obter a diagonal de uma amtriz</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>     [,1] [,2] [,3]
+[1,]    3    0    0
+[2,]    0    5    0
+[3,]    0    0    7</code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">mat3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>[1] 3 5 7</code></pre>
+</div>
+<div id="operações-com-matrizes" class="section level3" number="3.1.5">
+<h3>
+<span class="header-section-number">3.1.5</span> Operações com Matrizes<a class="anchor" aria-label="anchor" href="#opera%C3%A7%C3%B5es-com-matrizes"><i class="fas fa-link"></i></a>
+</h3>
+<p>Adição de matrizes é feita somando seus elementos correspondentes.
+<span class="math display">\[\begin{bmatrix}7 &amp; -3 &amp; 4\\ 2 &amp; 8 &amp; 5\end{bmatrix} + \begin{bmatrix}11 &amp; 5 &amp; 1\\ 3 &amp; -2 &amp; 0\end{bmatrix} = \begin{bmatrix}18 &amp; 2 &amp; 5\\ 5 &amp; 6 &amp; 5\end{bmatrix}\]</span></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mat4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="op">-</span><span class="fl">3</span>, <span class="fl">4</span>,</span>
+<span>                  <span class="fl">2</span>, <span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mat5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">11</span>, <span class="fl">5</span>, <span class="fl">1</span>,</span>
+<span>                  <span class="fl">3</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">0</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">mat4</span> <span class="op">+</span> <span class="va">mat5</span></span></code></pre></div>
+<pre><code>     [,1] [,2] [,3]
+[1,]   18    2    5
+[2,]    5    6    5</code></pre>
+<p>O produto <span class="math inline">\(\boldsymbol{AB}\)</span> de duas matrizes só é possível se as matrizes possuem dimensões compatíveis. O número de coluna da matriz <span class="math inline">\(\boldsymbol{A}\)</span> deve ser o mesmo que o número de linhas da matriz <span class="math inline">\(\boldsymbol{B}\)</span>. Dizemos então, que as matrizes <span class="math inline">\(\boldsymbol{A}\)</span> e <span class="math inline">\(\boldsymbol{B}\)</span> são conformes. O elemento <span class="math inline">\(AB_{11}\)</span> da matriz resultado, é dado pela soma ponderada entre linha 1 e coluna 1. No exemplo, <span class="math inline">\(AB_{11} = (2 \times 11) + (1 \times 3) + (3 \times 4) = 37\)</span>.</p>
+<p><span class="math display">\[A = \begin{bmatrix}2 &amp; 1 &amp; 3\\ 4 &amp; 6 &amp; 5\end{bmatrix} \hskip1em \text{e} \hskip1em B = \begin{bmatrix}11 &amp; 5\\ 3 &amp; -2\\ 4 &amp; 1\end{bmatrix}\]</span></p>
+<p>No R, utilizamos o operador <code>%*%</code> para realizar multiplicações matriciais.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mat6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">5</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">mat7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">11</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">AB</span> <span class="op">=</span> <span class="va">mat6</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">mat7</span></span>
+<span><span class="va">AB</span></span></code></pre></div>
+<pre><code>     [,1] [,2]
+[1,]   37   11
+[2,]   82   13</code></pre>
+<p>A matriz identidade é o elemento neutro da multiplicação de matrizes.</p>
+<p><span class="math display">\[AB = \begin{bmatrix}37 &amp; 11\\ 82 &amp; 13\end{bmatrix} \times \begin{bmatrix}1 &amp; 0\\ 0 &amp; 1\end{bmatrix} = \begin{bmatrix}37 &amp; 11\\ 82 &amp; 13\end{bmatrix}\]</span></p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">AB</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>     [,1] [,2]
+[1,]   37   11
+[2,]   82   13</code></pre>
+<p>Note que uma multiplicação entre um vetor <span class="math inline">\(v_{1\times n}\)</span> e um vetor <span class="math inline">\(e_{n\times 1}\)</span> resulta em um escalar.
+<span class="math display">\[\begin{bmatrix}2 &amp; 3 &amp; 5 &amp; 1\end{bmatrix} \times \begin{bmatrix}1\\ 2\\ 4 \\ 2\end{bmatrix} =30\]</span></p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>     [,1]
+[1,]   30</code></pre>
+<p>Desta maneira, a multiplicação de um vetor transposto, por ele mesmo, é sua soma quadrática.</p>
+<p><span class="math display">\[a'a = \begin{bmatrix}2 &amp; 3 &amp; 5 &amp; 1\end{bmatrix} \times \begin{bmatrix}2\\ 3\\ 5 \\ 1\end{bmatrix} = \sum_{i=1}^4 a_i^2\]</span>
+<span class="math display">\[\sum_{i=1}^4 a_i^2 = 2^2 + 3^2 + 5^2 + 1^2 = 39\]</span></p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">vetor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">vetor</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">vetor</span></span></code></pre></div>
+<pre><code>     [,1]
+[1,]   39</code></pre>
+<p>Da mesma forma, a multiplicação de um vetor pelo seu transposto, resulta em uma matriz quadrada e simétrica.</p>
+<p><span class="math display">\[aa' = \begin{bmatrix}2\\ 3\\ 5\\ 1\end{bmatrix} \times \begin{bmatrix}2 &amp; 3 &amp; 5 &amp; 1\end{bmatrix} = \begin{bmatrix}4 &amp; 6 &amp; 10 &amp; 2\\6 &amp; 9 &amp; 15 &amp; 3\\10 &amp; 15 &amp; 25 &amp; 5\\2 &amp; 3 &amp; 5 &amp; 1\end{bmatrix}\]</span></p>
+</div>
+<div id="posto-rank-de-uma-matriz" class="section level3" number="3.1.6">
+<h3>
+<span class="header-section-number">3.1.6</span> Posto (rank) de uma Matriz<a class="anchor" aria-label="anchor" href="#posto-rank-de-uma-matriz"><i class="fas fa-link"></i></a>
+</h3>
+<p>O posto (rank) de uma matriz <span class="math inline">\(A\)</span> está relacionado ao conceito de independência linear.</p>
+<blockquote>
+<p>Definição: o posto (rank) de uma matriz <span class="math inline">\(A\)</span> é definido como o número de colunas (linhas) linearmente independentes de A.</p>
+</blockquote>
+<p>Uma matriz <span class="math inline">\(A_{n \times p}\)</span>, em que <span class="math inline">\(p&lt;n\)</span>, é dita de posto completo, caso tenha posto <span class="math inline">\(p\)</span>.</p>
+</div>
+<div id="inversa-de-uma-matriz" class="section level3" number="3.1.7">
+<h3>
+<span class="header-section-number">3.1.7</span> Inversa de uma Matriz<a class="anchor" aria-label="anchor" href="#inversa-de-uma-matriz"><i class="fas fa-link"></i></a>
+</h3>
+<p>Uma matriz quadrada de posto completo é dita não-singular. Isso significa que ela possui inversa única.
+<span class="math display">\[A = \begin{bmatrix}a &amp; b\\ c &amp; d\end{bmatrix} \hskip1em ; \hskip1em \rightarrow \hskip1em A^{-1} = \frac{1}{\text{det}} \begin{bmatrix}d &amp; -b\\ -c  &amp; a\end{bmatrix}\]</span>
+<span class="math display">\[A = \begin{bmatrix}4 &amp; 7\\ 2 &amp; 6\end{bmatrix} \hskip1em ; \hskip1em \rightarrow \hskip1em A^{-1} = \frac{1}{ 24 - 14 } \begin{bmatrix}6 &amp; -7\\ -2  &amp; 4\end{bmatrix}\]</span></p>
+<p>No R, calculamos a inversa de uma matriz através da função <code><a href="https://rdrr.io/r/base/solve.html">solve()</a></code></p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mat8</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">7</span>,<span class="fl">2</span>,<span class="fl">6</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">T</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="va">mat8</span><span class="op">)</span></span></code></pre></div>
+<pre><code>     [,1] [,2]
+[1,]  0.6 -0.7
+[2,] -0.2  0.4</code></pre>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="intro.html"><span class="header-section-number">2</span> Introduction</a></div>
+<div class="next"><a href="methods.html"><span class="header-section-number">4</span> Methods</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#revis%C3%A3o"><span class="header-section-number">3</span> Revisão</a></li>
+<li>
+<a class="nav-link" href="#%C3%A1lgebra-linear-alguns-conceitos."><span class="header-section-number">3.1</span> Álgebra Linear: alguns conceitos.</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#matriz"><span class="header-section-number">3.1.1</span> Matriz</a></li>
+<li><a class="nav-link" href="#matriz-transposta"><span class="header-section-number">3.1.2</span> Matriz Transposta</a></li>
+<li><a class="nav-link" href="#matriz-sim%C3%A9trica"><span class="header-section-number">3.1.3</span> Matriz Simétrica</a></li>
+<li><a class="nav-link" href="#matriz-diagonal"><span class="header-section-number">3.1.4</span> Matriz Diagonal</a></li>
+<li><a class="nav-link" href="#opera%C3%A7%C3%B5es-com-matrizes"><span class="header-section-number">3.1.5</span> Operações com Matrizes</a></li>
+<li><a class="nav-link" href="#posto-rank-de-uma-matriz"><span class="header-section-number">3.1.6</span> Posto (rank) de uma Matriz</a></li>
+<li><a class="nav-link" href="#inversa-de-uma-matriz"><span class="header-section-number">3.1.7</span> Inversa de uma Matriz</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-08-18.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
