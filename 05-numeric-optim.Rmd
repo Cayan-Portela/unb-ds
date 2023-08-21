@@ -13,28 +13,26 @@ $$ g(x) := E [ Y | X = x]$$
 
 ## Regressão Linear
 
-Apesar de simples, a regressão linear é um modelo de extrema importância. Um bom entendimento é resposável por fundamentos sólidos em conceitos de modelagem. Em um modelo de regressão linear, temos as seguintes definições:
+_Regressão Linear_ configura um dos algoritmos mais simples em aprendizado supervisionado, porém, é um modelo de extrema importância. Além de ser bastante eficaz em diversas aplicações, seu bom entendimento é resposável por fundamentos sólidos em conceitos de modelagem, pois diversas modelagens mais sofisticadas podem ser vistas como generalizações de uma regressão linear. Esta seção apresenta alguns conceitos de regressão linear. Um estudo extremamente rico compreensivo no assunto pode ser visto em @kutner2005applied.
+
+Em um modelo de regressão linear simples, temos a seguinte relação:
 
 \begin{align}
-  y_i = \beta_0 + \beta_1 x_i + \epsilon_i (\#eq:um)
+  y_i = \beta_0 + \beta_1 x_i + \epsilon_i \qquad  \qquad i = 1, ..., n (\#eq:um)
 \end{align}
 
-- $y_i$ é a variávei de dependente e $x_i$ é a variável explicativa.
+em que $y_i$ é a variávei de interesse (dependente), $x_i$ é a variável explicativa (independente), $\beta_0$ e $\beta_1$ são os parâmetros a serem estimados pelo modelo e $\epsilon_i$ representa o erro associdao à i-ésima observação.
 
-- $\beta_0$ e $\beta_1$ são os parâmetros a serem estimados pelo modelo.
-
-- $\epsilon_i$ é o erro associdao à i-ésima observação.
-
-Vamos considerar um exemplo utilizando os dados 'mtcars', que consiste em informações sobre automóveis.
-```{r, echo=FALSE, message=FALSE, warnings=FALSE}
+Vamos considerar um exemplo utilizando os dados `mtcars` (disponível em `R`), que consiste em informações sobre automóveis.
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 data(mtcars)
-knitr::kable(head(mtcars))
+knitr::kable(head(mtcars, 3))
 ```
 Quanto mais pesado o carro, menor a autonomia (quantidade de milhas percorridas por galão)?
 
 $$Autonomia_i = \beta_0 + \beta_1 Peso_i + \epsilon_i$$
 
-```{r plot-last2, echo=FALSE, message=FALSE, warnings=FALSE}
+```{r plot-last2, echo=FALSE, message=FALSE, warning=FALSE}
 library(ggplot2)
 
 mtcars$pred <- lm(mpg ~ wt, data = mtcars)$fitted.values
@@ -156,7 +154,7 @@ $$\boldsymbol{\hat{\beta}} = \boldsymbol{(X'X)^{-1}X'Y}$$
 
 ### Decomposição QR
 
-Operações envolvendo a inversa de uma matriz podem ser bastante custosas do ponto de vista computacional, principalmente quando a matriz cresce em dimensões. Uma alternativa bastante utilizada é a decomposição $QR$.
+Operações envolvendo a inversa de uma matriz podem ser bastante custosas do ponto de vista computacional, principalmente quando a matriz cresce em dimensões. Uma alternativa bastante utilizada é a decomposição $QR$ (através do algoritmo Gram-Schmidt, por exemplo).
 
 Sendo $X_{n\times p}$ uma matriz de posto completo ($n$ > $p$, rank=$p$), então podemos decompor $X$ em $$X = QR$$
 
@@ -167,13 +165,59 @@ em que:
 
 Dessa maneira, podemos reescrever o processo de mínimos quadrados acima, como:
 
-$$\boldsymbol{X'X\beta} = \boldsymbol{X'Y}$$
-$$\boldsymbol{(QR)'(QR)\beta} = \boldsymbol{(QR)'Y}$$
-$$\boldsymbol{R'(Q'Q)R)\beta} = \boldsymbol{R'Q'Y}$$
-$$\boldsymbol{R'R\beta} = \boldsymbol{R'Q'Y}$$
-$$\boldsymbol{(R')^{-1}R'R\beta} = \boldsymbol{(R')^{-1}R'Q'Y}$$
+
+
+\begin{align}
+&\boldsymbol{X'X\beta} &\ = \quad &\boldsymbol{X'Y} \\
+&\boldsymbol{(QR)'(QR)\beta} &\ = \quad  &\boldsymbol{(QR)'Y} \\
+&\boldsymbol{R'R\beta} &\ = \quad  &\boldsymbol{R'Q'Y} \\
+&\boldsymbol{(R')^{-1}R'R\beta} &\ = \quad & \boldsymbol{(R')^{-1}R'Q'Y} \\
+&\boldsymbol{R\beta} &\ = \quad & \boldsymbol{Q'Y} \\
+\end{align}
+
 $$\boldsymbol{R\beta} = \boldsymbol{Q'Y}$$
 
-> Exercícios: adicione colinearidade na regressão dos dados mtcars e compare o resultado da função `lm()` no R e `sklearn.linear_model.LinearRegression()` do python.
+Dessa maneira, podemos chegar nos valores preditos  $\hat{y}$ através de $\boldsymbol{\hat{Y}} = \boldsymbol{QRR^{-1}Q'} = \boldsymbol{QQ'Y}$
+
+> **_Exercício_**: adicione colinearidade na regressão dos dados mtcars e compare o resultado da função `lm()` no R e `sklearn.linear_model.LinearRegression()` do python.
 
 ## Gradiente Descendente
+
+
+Gradiente descendente . . . 
+
+```{r gradient-descent-fig, warning=FALSE, message=FALSE, echo=FALSE, fig.height=4, fig.width=7, fig.align = 'center', fig.cap="Gradiente descendente minimiza a função de custo gradualmente, ajustando o(s) parâmetro(s) em cada passo (figura adaptada de Boehmke & Greenwell, 2019)."}
+
+# create data to plot
+x <- seq(-5, 5, by = .05)
+y <- x^2 + 3
+df <- data.frame(x, y)
+step <- 5
+step_size <- .2
+for(i in seq_len(18)) {
+  next_step <- max(step) + round(diff(range(max(step), which.min(df$y))) * step_size, 0)
+  step <- c(step, next_step)
+  next
+}
+steps <- df[step, ] %>%
+  mutate(x2 = lag(x), y2 = lag(y)) %>%
+  dplyr::slice(1:18)
+# plot
+ggplot(df, aes(x, y)) +
+  geom_line(size = 1.5, alpha = .5) +
+  theme_classic() +
+  scale_y_continuous("Função de perda", limits = c(0, 30)) +
+  xlab(expression(beta)) +
+  geom_segment(data = df[c(5, which.min(df$y)), ], aes(x = x, y = y, xend = x, yend = -Inf), lty = "dashed") +
+  geom_point(data = filter(df, y == min(y)), aes(x, y), size = 4, shape = 21, fill = "yellow") +
+  geom_point(data = steps, aes(x, y), size = 3, shape = 21, fill = "blue", alpha = .5) +
+  geom_curve(data = steps, aes(x = x, y = y, xend = x2, yend = y2), curvature = 1, lty = "dotted") +
+  theme(
+    text = element_text(size=15),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  annotate("text", x = df[5, "x"], y = 1, label = "Valor inicial", hjust = -0.1, vjust = .8, size=5) +
+  annotate("text", x = df[which.min(df$y), "x"], y = 1, label = "Mínimo", hjust = -0.1, vjust = .8, size=5) +
+  annotate("text", x = df[1, "x"]-0.75, y = df[10, "y"], label = "Taxa de aprendizado", hjust = -.8, vjust = 0, size=5)
+```

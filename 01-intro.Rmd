@@ -1,5 +1,5 @@
 # Introduction {#intro}
 
-Reference a figure by its code chunk label with the `fig:` prefix, e.g.,  Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+Reference a figure by its code chunk label with the `fig:` prefix, e.g.,  Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table .
 
 You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].

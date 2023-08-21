@@ -74,16 +74,13 @@
 <h2>
 <span class="header-section-number">6.2</span> Regressão Linear<a class="anchor" aria-label="anchor" href="#regress%C3%A3o-linear"><i class="fas fa-link"></i></a>
 </h2>
-<p>Apesar de simples, a regressão linear é um modelo de extrema importância. Um bom entendimento é resposável por fundamentos sólidos em conceitos de modelagem. Em um modelo de regressão linear, temos as seguintes definições:</p>
+<p><em>Regressão Linear</em> configura um dos algoritmos mais simples em aprendizado supervisionado, porém, é um modelo de extrema importância. Além de ser bastante eficaz em diversas aplicações, seu bom entendimento é resposável por fundamentos sólidos em conceitos de modelagem, pois diversas modelagens mais sofisticadas podem ser vistas como generalizações de uma regressão linear. Esta seção apresenta alguns conceitos de regressão linear. Um estudo extremamente rico compreensivo no assunto pode ser visto em <span class="citation">Kutner et al. (<a href="references.html#ref-kutner2005applied" role="doc-biblioref">2005</a>)</span>.</p>
+<p>Em um modelo de regressão linear simples, temos a seguinte relação:</p>
 <p><span class="math display" id="eq:um">\[\begin{align}
-  y_i = \beta_0 + \beta_1 x_i + \epsilon_i \tag{6.1}
+  y_i = \beta_0 + \beta_1 x_i + \epsilon_i \qquad  \qquad i = 1, ..., n \tag{6.1}
 \end{align}\]</span></p>
-<ul>
-<li><p><span class="math inline">\(y_i\)</span> é a variávei de dependente e <span class="math inline">\(x_i\)</span> é a variável explicativa.</p></li>
-<li><p><span class="math inline">\(\beta_0\)</span> e <span class="math inline">\(\beta_1\)</span> são os parâmetros a serem estimados pelo modelo.</p></li>
-<li><p><span class="math inline">\(\epsilon_i\)</span> é o erro associdao à i-ésima observação.</p></li>
-</ul>
-<p>Vamos considerar um exemplo utilizando os dados ‘mtcars’, que consiste em informações sobre automóveis.</p>
+<p>em que <span class="math inline">\(y_i\)</span> é a variávei de interesse (dependente), <span class="math inline">\(x_i\)</span> é a variável explicativa (independente), <span class="math inline">\(\beta_0\)</span> e <span class="math inline">\(\beta_1\)</span> são os parâmetros a serem estimados pelo modelo e <span class="math inline">\(\epsilon_i\)</span> representa o erro associdao à i-ésima observação.</p>
+<p>Vamos considerar um exemplo utilizando os dados <code>mtcars</code> (disponível em <code>R</code>), que consiste em informações sobre automóveis.</p>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr class="header">
 <th align="left"></th>
@@ -140,48 +137,6 @@
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">4</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">Hornet 4 Drive</td>
-<td align="right">21.4</td>
-<td align="right">6</td>
-<td align="right">258</td>
-<td align="right">110</td>
-<td align="right">3.08</td>
-<td align="right">3.215</td>
-<td align="right">19.44</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">Hornet Sportabout</td>
-<td align="right">18.7</td>
-<td align="right">8</td>
-<td align="right">360</td>
-<td align="right">175</td>
-<td align="right">3.15</td>
-<td align="right">3.440</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">Valiant</td>
-<td align="right">18.1</td>
-<td align="right">6</td>
-<td align="right">225</td>
-<td align="right">105</td>
-<td align="right">2.76</td>
-<td align="right">3.460</td>
-<td align="right">20.22</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
 <td align="right">1</td>
 </tr>
 </tbody>
@@ -272,7 +227,7 @@ Então,</p>
 <h3>
 <span class="header-section-number">6.2.3</span> Decomposição QR<a class="anchor" aria-label="anchor" href="#decomposi%C3%A7%C3%A3o-qr"><i class="fas fa-link"></i></a>
 </h3>
-<p>Operações envolvendo a inversa de uma matriz podem ser bastante custosas do ponto de vista computacional, principalmente quando a matriz cresce em dimensões. Uma alternativa bastante utilizada é a decomposição <span class="math inline">\(QR\)</span>.</p>
+<p>Operações envolvendo a inversa de uma matriz podem ser bastante custosas do ponto de vista computacional, principalmente quando a matriz cresce em dimensões. Uma alternativa bastante utilizada é a decomposição <span class="math inline">\(QR\)</span> (através do algoritmo Gram-Schmidt, por exemplo).</p>
 <p>Sendo <span class="math inline">\(X_{n\times p}\)</span> uma matriz de posto completo (<span class="math inline">\(n\)</span> &gt; <span class="math inline">\(p\)</span>, rank=<span class="math inline">\(p\)</span>), então podemos decompor <span class="math inline">\(X\)</span> em <span class="math display">\[X = QR\]</span></p>
 <p>em que:</p>
 <ul>
@@ -283,14 +238,17 @@ Então,</p>
 <span class="math inline">\(R\)</span> tem dimensões <span class="math inline">\(p \times p\)</span> e é uma matriz triangular superior</li>
 </ul>
 <p>Dessa maneira, podemos reescrever o processo de mínimos quadrados acima, como:</p>
-<p><span class="math display">\[\boldsymbol{X'X\beta} = \boldsymbol{X'Y}\]</span>
-<span class="math display">\[\boldsymbol{(QR)'(QR)\beta} = \boldsymbol{(QR)'Y}\]</span>
-<span class="math display">\[\boldsymbol{R'(Q'Q)R)\beta} = \boldsymbol{R'Q'Y}\]</span>
-<span class="math display">\[\boldsymbol{R'R\beta} = \boldsymbol{R'Q'Y}\]</span>
-<span class="math display">\[\boldsymbol{(R')^{-1}R'R\beta} = \boldsymbol{(R')^{-1}R'Q'Y}\]</span>
-<span class="math display">\[\boldsymbol{R\beta} = \boldsymbol{Q'Y}\]</span></p>
+<p><span class="math display">\[\begin{align}
+&amp;\boldsymbol{X'X\beta} &amp;\ = \quad &amp;\boldsymbol{X'Y} \\
+&amp;\boldsymbol{(QR)'(QR)\beta} &amp;\ = \quad  &amp;\boldsymbol{(QR)'Y} \\
+&amp;\boldsymbol{R'R\beta} &amp;\ = \quad  &amp;\boldsymbol{R'Q'Y} \\
+&amp;\boldsymbol{(R')^{-1}R'R\beta} &amp;\ = \quad &amp; \boldsymbol{(R')^{-1}R'Q'Y} \\
+&amp;\boldsymbol{R\beta} &amp;\ = \quad &amp; \boldsymbol{Q'Y} \\
+\end{align}\]</span></p>
+<p><span class="math display">\[\boldsymbol{R\beta} = \boldsymbol{Q'Y}\]</span></p>
+<p>Dessa maneira, podemos chegar nos valores preditos <span class="math inline">\(\hat{y}\)</span> através de <span class="math inline">\(\boldsymbol{\hat{Y}} = \boldsymbol{QRR^{-1}Q'} = \boldsymbol{QQ'Y}\)</span></p>
 <blockquote>
-<p>Exercícios: adicione colinearidade na regressão dos dados mtcars e compare o resultado da função <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> no R e <code>sklearn.linear_model.LinearRegression()</code> do python.</p>
+<p><strong><em>Exercício</em></strong>: adicione colinearidade na regressão dos dados mtcars e compare o resultado da função <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> no R e <code>sklearn.linear_model.LinearRegression()</code> do python.</p>
 </blockquote>
 </div>
 </div>
@@ -298,6 +256,13 @@ Então,</p>
 <h2>
 <span class="header-section-number">6.3</span> Gradiente Descendente<a class="anchor" aria-label="anchor" href="#gradiente-descendente"><i class="fas fa-link"></i></a>
 </h2>
+<p>Gradiente descendente . . .</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:gradient-descent-fig"></span>
+<img src="bookdown-demo_files/figure-html/gradient-descent-fig-1.png" alt="Gradiente descendente minimiza a função de custo gradualmente, ajustando o(s) parâmetro(s) em cada passo (figura adaptada de Boehmke &amp; Greenwell, 2019)." width="672"><p class="caption">
+Figure 6.1: Gradiente descendente minimiza a função de custo gradualmente, ajustando o(s) parâmetro(s) em cada passo (figura adaptada de Boehmke &amp; Greenwell, 2019).
+</p>
+</div>
 
 </div>
 </div>
@@ -333,7 +298,7 @@ Então,</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-08-18.</p>
+    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-08-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -6,6 +6,7 @@ eq:seis
 eq:sete
 eq:b0
 eq:b1
+fig:gradient-descent-fig
 about
 intro
 revisão
