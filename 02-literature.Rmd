@@ -2,7 +2,7 @@
 
 Nesta seção revisaremos brevemente alguns conceitos relacionados ao nosso curso.
 
-## Álgebra Linear: alguns conceitos.
+## Álgebra Linear
 
 ### Matriz
 
@@ -120,7 +120,7 @@ Da mesma forma, a multiplicação de um vetor pelo seu transposto, resulta em um
 
 $$aa' = \begin{bmatrix}2\\ 3\\ 5\\ 1\end{bmatrix} \times \begin{bmatrix}2 & 3 & 5 & 1\end{bmatrix} = \begin{bmatrix}4 & 6 & 10 & 2\\6 & 9 & 15 & 3\\10 & 15 & 25 & 5\\2 & 3 & 5 & 1\end{bmatrix}$$
 
-### Posto (rank) de uma Matriz
+### Posto (rank)
 
 O posto (rank) de uma matriz $A$ está relacionado ao conceito de independência linear. 
 

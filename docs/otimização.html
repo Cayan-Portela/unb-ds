@@ -43,9 +43,9 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html"><span class="header-section-number">1</span> About</a></li>
-<li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">2</span> Introdução</a></li>
 <li><a class="" href="revis%C3%A3o.html"><span class="header-section-number">3</span> Revisão</a></li>
-<li><a class="" href="methods.html"><span class="header-section-number">4</span> Methods</a></li>
+<li><a class="" href="probabilidade-e-estat%C3%ADstica.html"><span class="header-section-number">4</span> Probabilidade e Estatística</a></li>
 <li><a class="" href="teste-de-hip%C3%B3teses.html"><span class="header-section-number">5</span> Teste de Hipóteses</a></li>
 <li><a class="active" href="otimiza%C3%A7%C3%A3o.html"><span class="header-section-number">6</span> Otimização</a></li>
 <li><a class="" href="other-considerations.html"><span class="header-section-number">7</span> Other Considerations</a></li>
@@ -161,7 +161,7 @@
 <p>Para minimizar a função, aplicamos derivadas parciais, em respeito a <span class="math inline">\(\hat{\beta_0}\)</span> e <span class="math inline">\(\hat{\beta_1}\)</span>, e igualamos a zero.
 Como minimizar uma função?</p>
 <p>Para minimizar uma função <span class="math inline">\(f(x)\)</span>, calculamos sua derivada e igualamos a zero. Para verificar que <span class="math inline">\(f'(x) = 0\)</span> é um ponto de mínimo, devemos observar o sinal da segunda derivada, <span class="math inline">\(f''(x)\)</span>.</p>
-<div class="inline-figure"><img src="images/simple_tangent_graph.png"></div>
+<div class="inline-figure"><img src="images/simple_tangent_graph.png" width="40%" style="display: block; margin: auto;"></div>
 <p>Fazendo as derivadas parciais da função de custo (L) em relação a <span class="math inline">\(\beta_0\)</span> e em relação a <span class="math inline">\(\beta_1\)</span>, temos:</p>
 <p><span class="math display">\[L = \sum_{i=1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2\]</span>
 <span class="math display" id="eq:tres">\[\begin{align}
@@ -256,13 +256,36 @@ Então,</p>
 <h2>
 <span class="header-section-number">6.3</span> Gradiente Descendente<a class="anchor" aria-label="anchor" href="#gradiente-descendente"><i class="fas fa-link"></i></a>
 </h2>
-<p>Gradiente descendente . . .</p>
+<p>Gradiente descendente é um dos algoritmos de otimização mais populares e amplamente utilizado, principalmente em otimização de redes neurais. O algoritmo busca encontrar o mínimo de uma função <span class="math inline">\(J(\beta)\)</span> de forma iterativa, em que <span class="math inline">\(\beta\)</span> são os parâmetros do modelo. A ideia consiste em atualizar os parâmetros na direção oposta do gradiente <span class="math inline">\(\nabla_{\beta} J(\beta)\)</span> em relação aos parâmetros <span class="citation">(Ruder <a href="references.html#ref-ruder2016overview" role="doc-biblioref">2016</a>)</span>, ou seja, seguimos a direção da inclinação da região de resposta criada, em busca de um vale. Em sua forma mais simples, o algoritmo é definido como:</p>
+<p><span class="math display" id="eq:gradientedesc">\[\begin{align}
+\beta^{(k+1)} = \beta^{(k)} - \alpha_k \nabla J(\beta^{k}), \qquad k = 0, 1, \cdots
+\tag{6.9}
+\end{align}\]</span></p>
+<p>Em que <span class="math inline">\(\beta^{(k)}\)</span> são os valores do vetor de parâmetros no passo <span class="math inline">\(k\)</span>, <span class="math inline">\(\alpha\)</span> é a taxa de aprendizado (<em>learning rate</em>) e <span class="math inline">\(\nabla_{\beta} J(\beta)\)</span> é o gradiente da função de custo <span class="math inline">\(L(\cdot)\)</span>, ou seja, o vetor de derivadas parciais em relação aos parâmetros <span class="math inline">\(\beta\)</span>. A taxa de aprendizado <span class="math inline">\(\alpha\)</span> determina o tamanho do passo em cada atualização, visando atingir o mínimo (local).</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:gradient-descent-fig"></span>
 <img src="bookdown-demo_files/figure-html/gradient-descent-fig-1.png" alt="Gradiente descendente minimiza a função de custo gradualmente, ajustando o(s) parâmetro(s) em cada passo (figura adaptada de Boehmke &amp; Greenwell, 2019)." width="672"><p class="caption">
 Figure 6.1: Gradiente descendente minimiza a função de custo gradualmente, ajustando o(s) parâmetro(s) em cada passo (figura adaptada de Boehmke &amp; Greenwell, 2019).
 </p>
 </div>
+<p>Com uma taxa de aprendizado muito pequena são necessários muitas iterações para encontrar o mínimo. Todavia, caso a taxa de aprendizado seja muito grande, você pode acabar “pulando” o ponto de mínimo desejado.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:gradient-descent-step"></span>
+<img src="bookdown-demo_files/figure-html/gradient-descent-step-1.png" alt="Taxa de aprendizado pequena e grande (figura adaptada de Boehmke &amp; Greenwell, 2019)." width="672"><p class="caption">
+Figure 6.2: Taxa de aprendizado pequena e grande (figura adaptada de Boehmke &amp; Greenwell, 2019).
+</p>
+</div>
+<p>Vamos ilustrar utilizando o exemplo acima. Regressão Linear.</p>
+<p><span class="math display">\[\hat{L}(f_\beta) = \frac{1}{n} \sum_{i=1}^{n} (x\beta - y)^2 =  \frac{1}{n} || X\beta - Y||_2^2\]</span></p>
+<p>O gradiente é igual a:</p>
+<p><span class="math display">\[\begin{align}
+ &amp;\nabla_\beta \hat{L}(f_\beta) &amp;=\\
+ &amp; \nabla_\beta \frac{1}{n} || X\beta - Y||_2^2 &amp;=\\
+ &amp; \nabla_\beta [(X\beta - Y)'(X\beta - Y)] &amp;=\\
+ &amp; \nabla_\beta [(\beta'X' - Y')(X\beta - Y)] &amp;=\\
+ &amp; \nabla_\beta [\beta'X'X\beta - 2\beta'X'Y + Y'Y] &amp;=\\
+ &amp; 2X'X\beta - 2X'Y
+\end{align}\]</span></p>
 
 </div>
 </div>
@@ -298,7 +321,7 @@ Figure 6.1: Gradiente descendente minimiza a função de custo gradualmente, aju
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-08-21.</p>
+    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-08-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1,4 +1,40 @@
-# Methods
+# Probabilidade e Estatística
+
+::: {.theorem name="Teorema da Probabilidade Total"}
+Dado um espaço amostral $\Omega$ particionado em $E_1,E_2,...,E_n$ e um evento $A\in \Omega$, a probabilidade de ocorrência de A pode ser expressa por:
+$$P(A)=P(A|E_1)\cdot P(E_1)+P(A|E_2)\cdot P(E_2)+...+P(A|E_n)\cdot P(E_n)$$
+$$P(A) = \sum\limits_{i=1}^{n} {P(A|E_i)\cdot P(E_i)}$$
+:::
+
+---
+
+<br>
+
+::: {.theorem name="Teorema da Bayes"}
+Dado um espaço amostral $\Omega$ particionado em $E_1,E_2,...,E_n$ e um evento $A\in \Omega$, a probabilidade condicional de $E_j$ dado $A$, para todo $j\in \{1,2,...,n\}$, é dada por:
+$$P(E_j|A) = \frac{P(A|E_j)\cdot P(E_j)}{\sum\limits_{i=1}^{n} {P(A|E_i)\cdot P(E_i)}}$$
+:::
+
+---
+
+<br>
+
+## Distribuções de Probabilidade
+
+> $\text{Bernoulli}(p):$ 
+> Distribuição associada a um único experimento aleatório com apenas dois resultados possíveis: $0$, caso se observe $A$; e $1$, caso se observe $A^c$.
+> Seja $X=$ número de sucessos (espaço amostral finito), então temos que:
+
+$$f(x)=P(X=x)=\begin{cases} 1-p,&\quad x=0,\\ p,&\quad x=1.\end{cases}$$
+
+<br>
+
+> $\text{Binomial}(n, p):$ 
+> Distribuição associada a $n$ experimentos aleatórios independentes de Bernoulli.
+> Seja $X=$ número de sucessos, a função massa de probabilidade é dada por:
+
+$$f(x)=P(X=x)={n\choose x}\cdot p^{x}\cdot (1-p)^{n-x},x=0,1,...,n$$
+
 
 We describe our methods in this chapter.
 
@@ -19,10 +55,12 @@ library(dplyr)
 library(ggplot2)
 ```
 
-```{r, comment=""}
+```{r, comment="", eval=FALSE}
 turma_1 <- rbinom(n = 30, size = 1, prob = 0.7)
 sum(turma_1)
+# [1] 22
 mean(turma_1)
+# [1] 0.7333333
 ```
 Imagine agora, que coletamos a mesma informação, para 100 turmas.
 ```{r, comment=""}
@@ -34,15 +72,19 @@ for (i in seq_along(n_turmas)){
 ```
 
 Vamos olhar a média das três primeiras turmas:
-```{r, comment=""}
+```{r, comment="", eval=FALSE}
 n_turmas[[1]] %>% mean()
+# [1] 0.7333333
 n_turmas[[2]] %>% mean()
+# [1] 0.7333333
 n_turmas[[3]] %>% mean()
+# [1] 0.7666667
 ```
 
 Mas se juntarmos, todos os alunos, em uma única gigantesca turma, temos a seguinte proporção de formandos:
-```{r, comment=""}
+```{r, comment="", eval=FALSE}
 n_turmas %>% unlist() %>% mean()
+# [1] 0.697
 ```
 
 ## Teorema do Limite Central

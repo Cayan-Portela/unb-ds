@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 Probabilidade e Estatística | UnB - Data Science</title>
+<meta name="author" content="Cayan Portela and Herbert Kimura">
+<meta name="description" content="Theorem 4.1 (Teorema da Probabilidade Total) Dado um espaço amostral \(\Omega\) particionado em \(E_1,E_2,...,E_n\) e um evento \(A\in \Omega\), a probabilidade de ocorrência de A pode ser...">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
+<meta property="og:title" content="Chapter 4 Probabilidade e Estatística | UnB - Data Science">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Theorem 4.1 (Teorema da Probabilidade Total) Dado um espaço amostral \(\Omega\) particionado em \(E_1,E_2,...,E_n\) e um evento \(A\in \Omega\), a probabilidade de ocorrência de A pode ser...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 4 Probabilidade e Estatística | UnB - Data Science">
+<meta name="twitter:description" content="Theorem 4.1 (Teorema da Probabilidade Total) Dado um espaço amostral \(\Omega\) particionado em \(E_1,E_2,...,E_n\) e um evento \(A\in \Omega\), a probabilidade de ocorrência de A pode ser...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">UnB - Data Science</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> About</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">2</span> Introdução</a></li>
+<li><a class="" href="revis%C3%A3o.html"><span class="header-section-number">3</span> Revisão</a></li>
+<li><a class="active" href="probabilidade-e-estat%C3%ADstica.html"><span class="header-section-number">4</span> Probabilidade e Estatística</a></li>
+<li><a class="" href="teste-de-hip%C3%B3teses.html"><span class="header-section-number">5</span> Teste de Hipóteses</a></li>
+<li><a class="" href="otimiza%C3%A7%C3%A3o.html"><span class="header-section-number">6</span> Otimização</a></li>
+<li><a class="" href="other-considerations.html"><span class="header-section-number">7</span> Other Considerations</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="probabilidade-e-estatística" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Probabilidade e Estatística<a class="anchor" aria-label="anchor" href="#probabilidade-e-estat%C3%ADstica"><i class="fas fa-link"></i></a>
+</h1>
+<div class="theorem">
+<p><span id="thm:unlabeled-div-1" class="theorem"><strong>Theorem 4.1  (Teorema da Probabilidade Total) </strong></span>Dado um espaço amostral <span class="math inline">\(\Omega\)</span> particionado em <span class="math inline">\(E_1,E_2,...,E_n\)</span> e um evento <span class="math inline">\(A\in \Omega\)</span>, a probabilidade de ocorrência de A pode ser expressa por:
+<span class="math display">\[P(A)=P(A|E_1)\cdot P(E_1)+P(A|E_2)\cdot P(E_2)+...+P(A|E_n)\cdot P(E_n)\]</span>
+<span class="math display">\[P(A) = \sum\limits_{i=1}^{n} {P(A|E_i)\cdot P(E_i)}\]</span></p>
+</div>
+<hr>
+<p><br></p>
+<div class="theorem">
+<p><span id="thm:unlabeled-div-2" class="theorem"><strong>Theorem 4.2  (Teorema da Bayes) </strong></span>Dado um espaço amostral <span class="math inline">\(\Omega\)</span> particionado em <span class="math inline">\(E_1,E_2,...,E_n\)</span> e um evento <span class="math inline">\(A\in \Omega\)</span>, a probabilidade condicional de <span class="math inline">\(E_j\)</span> dado <span class="math inline">\(A\)</span>, para todo <span class="math inline">\(j\in \{1,2,...,n\}\)</span>, é dada por:
+<span class="math display">\[P(E_j|A) = \frac{P(A|E_j)\cdot P(E_j)}{\sum\limits_{i=1}^{n} {P(A|E_i)\cdot P(E_i)}}\]</span></p>
+</div>
+<hr>
+<p><br></p>
+<div id="distribuções-de-probabilidade" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Distribuções de Probabilidade<a class="anchor" aria-label="anchor" href="#distribu%C3%A7%C3%B5es-de-probabilidade"><i class="fas fa-link"></i></a>
+</h2>
+<blockquote>
+<p><span class="math inline">\(\text{Bernoulli}(p):\)</span>
+Distribuição associada a um único experimento aleatório com apenas dois resultados possíveis: <span class="math inline">\(0\)</span>, caso se observe <span class="math inline">\(A\)</span>; e <span class="math inline">\(1\)</span>, caso se observe <span class="math inline">\(A^c\)</span>.
+Seja <span class="math inline">\(X=\)</span> número de sucessos (espaço amostral finito), então temos que:</p>
+</blockquote>
+<p><span class="math display">\[f(x)=P(X=x)=\begin{cases} 1-p,&amp;\quad x=0,\\ p,&amp;\quad x=1.\end{cases}\]</span></p>
+<p><br></p>
+<blockquote>
+<p><span class="math inline">\(\text{Binomial}(n, p):\)</span>
+Distribuição associada a <span class="math inline">\(n\)</span> experimentos aleatórios independentes de Bernoulli.
+Seja <span class="math inline">\(X=\)</span> número de sucessos, a função massa de probabilidade é dada por:</p>
+</blockquote>
+<p><span class="math display">\[f(x)=P(X=x)={n\choose x}\cdot p^{x}\cdot (1-p)^{n-x},x=0,1,...,n\]</span></p>
+<p>We describe our methods in this chapter.</p>
+<p>Math can be added in body using usual syntax like this</p>
+</div>
+<div id="lei-dos-grandes-números" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Lei dos Grandes Números<a class="anchor" aria-label="anchor" href="#lei-dos-grandes-n%C3%BAmeros"><i class="fas fa-link"></i></a>
+</h2>
+<p>Em Teoria de Probabilidade, a Lei dos Grandes Números descreve que o resultado ao realizar o mesmo experimento um grande número de vezes.
+De acordo com a lei, a média dos resultados obtidos em um grande número de tentativas deve estar próxima do valor esperado, e tende a se aproximar mais, à medida que mais tentativas são realizadas.
+Seja <span class="math inline">\(X_1, X_2, ..., X_N\)</span> uma sequência de variáveis aleatórias independentes de uma mesma distribuição de probabilidade. Seja <span class="math inline">\(E(X_i) = \mu\)</span>. Então, com probabilidade 1, temos que:</p>
+<p><span class="math display">\[
+\frac{X_1 + X_2 + X_3 + \cdots + X_n}{n} \rightarrow \mu \quad \quad \quad \text{as} \quad n \rightarrow \infty
+\]</span></p>
+<p>Para ilustrar o teorema acima, suponha que, a probabilidade de conclusão de um curso, em cada turma de 30 alunos, seja <span class="math inline">\(p = 0.7\)</span>. Uma turma selecioanda aleatoriamente, possui o seguinte número de formandos:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">turma_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, size <span class="op">=</span> <span class="fl">1</span>, prob <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">turma_1</span><span class="op">)</span></span>
+<span><span class="co"># [1] 22</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">turma_1</span><span class="op">)</span></span>
+<span><span class="co"># [1] 0.7333333</span></span></code></pre></div>
+<p>Imagine agora, que coletamos a mesma informação, para 100 turmas.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n_turmas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">n_turmas</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">n_turmas</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, size <span class="op">=</span> <span class="fl">1</span>, prob <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Vamos olhar a média das três primeiras turmas:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n_turmas</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># [1] 0.7333333</span></span>
+<span><span class="va">n_turmas</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># [1] 0.7333333</span></span>
+<span><span class="va">n_turmas</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># [1] 0.7666667</span></span></code></pre></div>
+<p>Mas se juntarmos, todos os alunos, em uma única gigantesca turma, temos a seguinte proporção de formandos:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n_turmas</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># [1] 0.697</span></span></code></pre></div>
+</div>
+<div id="teorema-do-limite-central" class="section level2" number="4.3">
+<h2>
+<span class="header-section-number">4.3</span> Teorema do Limite Central<a class="anchor" aria-label="anchor" href="#teorema-do-limite-central"><i class="fas fa-link"></i></a>
+</h2>
+<p>Seja <span class="math inline">\(X_1, X_2, ..., X_N\)</span> uma sequência de variáveis aleatórias independentes e identicamente distribuídas (i.i.d), com média <span class="math inline">\(\mu\)</span> e variância <span class="math inline">\(\sigma^2\)</span>.
+A distribuição de</p>
+<p><span class="math display">\[
+\frac{X_1 + X_2 + X_3 + \cdots + X_n - n\mu}{\sigma \sqrt{n}} \rightarrow Z \sim N(0,1) \quad \quad \quad \text{as} \quad n \rightarrow \infty
+\]</span></p>
+<p>Então temos que:
+<span class="math display">\[
+\frac{\bar{X} - \mu}{ \frac{\sigma}{\sqrt{n}} } \rightarrow Z \sim N(0,1) \quad \quad \quad \text{as} \quad n \rightarrow \infty
+\]</span></p>
+<p>Em outras palavras, o Teorema do Limite Central garante que, para grandes amostras, a média amostral padronizada segue uma distribuição normal com média 0 e variância 1.
+<!-- You can also use math in footnotes like this^[where we mention $p = \frac{a}{b}$]. --></p>
+<!-- We will approximate standard error to 0.027[^longnote] -->
+<!-- [^longnote]: $p$ is unknown but expected to be around 1/3. Standard error will be approximated -->
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="revis%C3%A3o.html"><span class="header-section-number">3</span> Revisão</a></div>
+<div class="next"><a href="teste-de-hip%C3%B3teses.html"><span class="header-section-number">5</span> Teste de Hipóteses</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#probabilidade-e-estat%C3%ADstica"><span class="header-section-number">4</span> Probabilidade e Estatística</a></li>
+<li><a class="nav-link" href="#distribu%C3%A7%C3%B5es-de-probabilidade"><span class="header-section-number">4.1</span> Distribuções de Probabilidade</a></li>
+<li><a class="nav-link" href="#lei-dos-grandes-n%C3%BAmeros"><span class="header-section-number">4.2</span> Lei dos Grandes Números</a></li>
+<li><a class="nav-link" href="#teorema-do-limite-central"><span class="header-section-number">4.3</span> Teorema do Limite Central</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-08-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

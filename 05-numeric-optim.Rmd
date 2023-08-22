@@ -69,7 +69,9 @@ Como minimizar uma função?
 
 Para minimizar uma função $f(x)$, calculamos sua derivada e igualamos a zero. Para verificar que $f'(x) = 0$ é um ponto de mínimo, devemos observar o sinal da segunda derivada, $f''(x)$.
 
-![](images/simple_tangent_graph.png)
+```{r, warning=FALSE, message=FALSE, echo=FALSE, out.width="40%", fig.align = 'center', fig.cap=""}
+knitr::include_graphics('images/simple_tangent_graph.png')
+```
 
 Fazendo as derivadas parciais da função de custo (L) em relação a $\beta_0$ e em relação a $\beta_1$, temos:
 
@@ -184,7 +186,14 @@ Dessa maneira, podemos chegar nos valores preditos  $\hat{y}$ através de $\bold
 ## Gradiente Descendente
 
 
-Gradiente descendente . . . 
+Gradiente descendente é um dos algoritmos de otimização mais populares e amplamente utilizado, principalmente em otimização de redes neurais. O algoritmo busca encontrar o mínimo de uma função $J(\beta)$ de forma iterativa, em que $\beta$ são os parâmetros do modelo. A ideia consiste em atualizar os parâmetros na direção oposta do gradiente $\nabla_{\beta} J(\beta)$ em relação aos parâmetros [@ruder2016overview], ou seja, seguimos a direção da inclinação da região de resposta criada, em busca de um vale. Em sua forma mais simples, o algoritmo é definido como:
+
+\begin{align}
+\beta^{(k+1)} = \beta^{(k)} - \alpha_k \nabla J(\beta^{k}), \qquad k = 0, 1, \cdots
+(\#eq:gradientedesc)
+\end{align}
+
+Em que $\beta^{(k)}$ são os valores do vetor de parâmetros no passo $k$, $\alpha$ é a taxa de aprendizado (_learning rate_) e $\nabla_{\beta} J(\beta)$ é o gradiente da função de custo $L(\cdot)$, ou seja, o vetor de derivadas parciais em relação aos parâmetros $\beta$. A taxa de aprendizado $\alpha$ determina o tamanho do passo em cada atualização, visando atingir o mínimo (local).
 
 ```{r gradient-descent-fig, warning=FALSE, message=FALSE, echo=FALSE, fig.height=4, fig.width=7, fig.align = 'center', fig.cap="Gradiente descendente minimiza a função de custo gradualmente, ajustando o(s) parâmetro(s) em cada passo (figura adaptada de Boehmke & Greenwell, 2019)."}
 
@@ -221,3 +230,68 @@ ggplot(df, aes(x, y)) +
   annotate("text", x = df[which.min(df$y), "x"], y = 1, label = "Mínimo", hjust = -0.1, vjust = .8, size=5) +
   annotate("text", x = df[1, "x"]-0.75, y = df[10, "y"], label = "Taxa de aprendizado", hjust = -.8, vjust = 0, size=5)
 ```
+
+Com uma taxa de aprendizado muito pequena são necessários muitas iterações para encontrar o mínimo. Todavia, caso a taxa de aprendizado seja muito grande, você pode acabar "pulando" o ponto de mínimo desejado.
+
+```{r gradient-descent-step, warning=FALSE, message=FALSE, echo=FALSE, fig.height=3, fig.width=7, fig.align = 'center', fig.cap="Taxa de aprendizado pequena e grande (figura adaptada de Boehmke & Greenwell, 2019)."}
+#library(ggplot2)
+# create too small of a learning rate
+step <- 5
+step_size <- .05
+for(i in seq_len(10)) {
+  next_step <- max(step) + round(diff(range(max(step), which.min(df$y))) * step_size, 0)
+  step <- c(step, next_step)
+  next
+}
+too_small <- df[step, ] %>%
+  mutate(x2 = lag(x), y2 = lag(y))
+# plot
+p1 <- ggplot(df, aes(x, y)) +
+  geom_line(size = 1.5, alpha = .5) +
+  theme_classic() +
+  scale_y_continuous("Função de perda", limits = c(0, 30)) +
+  xlab(expression(beta)) +
+  geom_segment(data = too_small[1, ], aes(x = x, y = y, xend = x, yend = -Inf), lty = "dashed") +
+  geom_point(data = too_small, aes(x, y), size = 3, shape = 21, fill = "blue", alpha = .5) +
+  geom_curve(data = too_small, aes(x = x, y = y, xend = x2, yend = y2), curvature = 1, lty = "dotted") +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  annotate("text", x = df[5, "x"], y = 1, label = "Valor inicial", hjust = -0.1, vjust = 5) +
+  ggtitle("b) muito pequeno")
+# create too large of a learning rate
+too_large <- df[round(which.min(df$y) * (1 + c(-.9, -.6, -.2, .3)), 0), ] %>%
+  mutate(x2 = lag(x), y2 = lag(y))
+# plot
+p2 <- ggplot(df, aes(x, y)) +
+  geom_line(size = 1.5, alpha = .5) +
+  theme_classic() +
+  scale_y_continuous("Função de perda", limits = c(0, 30)) +
+  xlab(expression(beta)) +
+  geom_segment(data = too_large[1, ], aes(x = x, y = y, xend = x, yend = -Inf), lty = "dashed") +
+  geom_point(data = too_large, aes(x, y), size = 3, shape = 21, fill = "blue", alpha = .5) +
+  geom_curve(data = too_large, aes(x = x, y = y, xend = x2, yend = y2), curvature = 1, lty = "dotted") +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  annotate("text", x = too_large[1, "x"], y = 1, label = "Valor inicial", hjust = -0.1, vjust = 5) +
+  ggtitle("a) muito grande")
+gridExtra::grid.arrange(p2, p1, nrow = 1)
+```
+
+Vamos ilustrar utilizando o exemplo acima. Regressão Linear.
+
+$$\hat{L}(f_\beta) = \frac{1}{n} \sum_{i=1}^{n} (x\beta - y)^2 =  \frac{1}{n} || X\beta - Y||_2^2$$
+
+O gradiente é igual a:
+
+\begin{align}
+ &\nabla_\beta \hat{L}(f_\beta) &=\\
+ & \nabla_\beta \frac{1}{n} || X\beta - Y||_2^2 &=\\
+ & \nabla_\beta [(X\beta - Y)'(X\beta - Y)] &=\\
+ & \nabla_\beta [(\beta'X' - Y')(X\beta - Y)] &=\\
+ & \nabla_\beta [\beta'X'X\beta - 2\beta'X'Y + Y'Y] &=\\
+ & 2X'X\beta - 2X'Y
+\end{align}
