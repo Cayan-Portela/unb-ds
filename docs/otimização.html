@@ -228,14 +228,14 @@ Então,</p>
 <span class="header-section-number">6.2.3</span> Decomposição QR<a class="anchor" aria-label="anchor" href="#decomposi%C3%A7%C3%A3o-qr"><i class="fas fa-link"></i></a>
 </h3>
 <p>Operações envolvendo a inversa de uma matriz podem ser bastante custosas do ponto de vista computacional, principalmente quando a matriz cresce em dimensões. Uma alternativa bastante utilizada é a decomposição <span class="math inline">\(QR\)</span> (através do algoritmo Gram-Schmidt, por exemplo).</p>
-<p>Sendo <span class="math inline">\(X_{n\times p}\)</span> uma matriz de posto completo (<span class="math inline">\(n\)</span> &gt; <span class="math inline">\(p\)</span>, rank=<span class="math inline">\(p\)</span>), então podemos decompor <span class="math inline">\(X\)</span> em <span class="math display">\[X = QR\]</span></p>
+<p>Sendo <span class="math inline">\(X_{n\times p}\)</span> uma matriz de posto completo (<span class="math inline">\(n\)</span> &gt; <span class="math inline">\(p\)</span>, rank=<span class="math inline">\(p\)</span>), então podemos decompor <span class="math inline">\(\boldsymbol{X}\)</span> em <span class="math display">\[\boldsymbol{X} = \boldsymbol{QR}\]</span></p>
 <p>em que:</p>
 <ul>
 <li>
-<span class="math inline">\(Q\)</span> tem dimensões <span class="math inline">\(n\times p\)</span> e <span class="math inline">\(Q'Q = I\)</span>
+<span class="math inline">\(\boldsymbol{Q}\)</span> tem dimensões <span class="math inline">\(n\times p\)</span> e <span class="math inline">\(\boldsymbol{Q'Q} = \boldsymbol{I}\)</span>
 </li>
 <li>
-<span class="math inline">\(R\)</span> tem dimensões <span class="math inline">\(p \times p\)</span> e é uma matriz triangular superior</li>
+<span class="math inline">\(\boldsymbol{R}\)</span> tem dimensões <span class="math inline">\(p \times p\)</span> e é uma matriz triangular superior</li>
 </ul>
 <p>Dessa maneira, podemos reescrever o processo de mínimos quadrados acima, como:</p>
 <p><span class="math display">\[\begin{align}
@@ -284,9 +284,75 @@ Figure 6.2: Taxa de aprendizado pequena e grande (figura adaptada de Boehmke &am
  &amp; \nabla_\beta [(X\beta - Y)'(X\beta - Y)] &amp;=\\
  &amp; \nabla_\beta [(\beta'X' - Y')(X\beta - Y)] &amp;=\\
  &amp; \nabla_\beta [\beta'X'X\beta - 2\beta'X'Y + Y'Y] &amp;=\\
- &amp; 2X'X\beta - 2X'Y
+ &amp; 2X'X\beta - 2X'Y &amp;=\\
+ &amp; 2X'( X\beta - Y)
+\end{align}\]</span></p>
+</div>
+<div id="regressão-logística" class="section level2" number="6.4">
+<h2>
+<span class="header-section-number">6.4</span> Regressão Logística<a class="anchor" aria-label="anchor" href="#regress%C3%A3o-log%C3%ADstica"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para problemas de classificação binária, nossa variável Y assume dois possíveis valores: 0 ou 1 (sim ou não). Assim, desejamos saber a probabilidade de y assumir o valor target 1. Para isso, o modelo de Regerssão Logística utiliza a função de ligação logística, como função de ligação na combinação linear do modelo. Agora estamos modelando uma probabilidade, então nossa variável target <span class="math inline">\(Y = p(X)\)</span> indica a probabilidade de ocorrência do evento.</p>
+<p>Então, temos que:</p>
+<p><span class="math display">\[\begin{align}
+&amp;p(X) &amp;\ = \quad &amp;\frac{e^{\beta_0 + \beta_1x}}{1 + e^{\beta_0 + \beta_1x}} \\
+&amp;\frac{p(X)}{1-p(x)} &amp;\ = \quad &amp;e^{\beta_0 + \beta_1x}
+\end{align}\]</span></p>
+<p>Então:</p>
+<p><span class="math display" id="eq:reglogistica">\[\begin{align}
+&amp; \text{log}\left(\frac{p(X)}{1-p(x)}\right) = {\beta_0 + \beta_1x}
+\tag{6.10}
+\end{align}\]</span></p>
+<p>O processo de otimização para encontrar os estimadores dos parâmetros <span class="math inline">\(\boldsymbol{\beta}\)</span> envolve maximizar a log-verossimilhança da distribuição <span class="math inline">\(Bernoulli(p)\)</span>.</p>
+<blockquote>
+<p><span class="math inline">\(\text{Bernoulli}(p):\)</span>
+Distribuição associada a um único experimento aleatório com apenas dois resultados possíveis: <span class="math inline">\(0\)</span>, caso se observe <span class="math inline">\(A\)</span>; e <span class="math inline">\(1\)</span>, caso se observe <span class="math inline">\(A^c\)</span>.
+Seja <span class="math inline">\(X=\)</span> número de sucessos (espaço amostral finito), então temos que:</p>
+</blockquote>
+<p><span class="math display">\[f(x)=P(X=x)=\begin{cases} 1-p,&amp;\quad x=0,\\ p,&amp;\quad x=1.\end{cases}\]</span></p>
+<p><br></p>
+<p><span class="math display">\[\begin{align}
+&amp; L(\beta) &amp;\ = &amp;\prod p_i^{y_i} \times (1-p_i)^{(1-y_i)} \\
+&amp; \text{log}L(\beta) &amp;\ = &amp;\sum y_i \text{log}(p_i) + (1-y_i)\text{log}(1-p_i) \\
+&amp; \text{log}L(\beta) &amp;\ = &amp;\sum y_i \text{log}(p_i) + \text{log}(1-p_i) - y_i\text{log}(1-p_i) \\
+&amp; \text{log}L(\beta) &amp;\ = &amp;\sum y_i \text{log}(p_i) - y_i\text{log}(1-p_i) + \text{log}(1-p_i) \\
+&amp; \text{log}L(\beta) &amp;\ = &amp;\sum y_i \text{log}\left(\frac{p_i}{1-p_i}\right) + \text{log}(1-p_i) \\
+&amp; \text{log}L(\beta) &amp;\ = &amp;\sum y_i \text{log}\left(\frac{p_i}{1-p_i}\right) + \text{log}\left(\frac{1}{1+e^{\beta_0 + \beta_1x}}\right)
+\end{align}\]</span></p>
+<p><br></p>
+<p><span class="math display">\[\begin{align}
+&amp; \text{log}L(\beta) &amp; = \sum y_i \text{log}(\frac{p_i}{1-p_i}) + \text{log}(1) - \text{log}(1+e^{\beta_0 + \beta_1x})
+\end{align}\]</span></p>
+<p>Substituindo <span class="math inline">\(\text{log}\left(\frac{p(X)}{1-p(x)}\right) = {\beta_0 + \beta_1x}\)</span>, obtemos a função de <span class="math inline">\(\boldsymbol{\beta}\)</span> que desejamos otimizar:</p>
+<p><span class="math display" id="eq:verosslogistica">\[\begin{align}
+\sum_{i=1}^n   \left[ y_i \boldsymbol{\beta}^T  \mathbf{x}_{i}  - \log \left(1 + \exp(  \boldsymbol{\beta}^T \mathbf{x}_{i}  \right)    \right]
+\tag{6.11}
+\end{align}\]</span></p>
+<div id="newton-raphson" class="section level3" number="6.4.1">
+<h3>
+<span class="header-section-number">6.4.1</span> Newton-Raphson<a class="anchor" aria-label="anchor" href="#newton-raphson"><i class="fas fa-link"></i></a>
+</h3>
+<p>Neste caso não possuimos uma solução fechada para <span class="math inline">\({\bf \beta}\)</span>. O método Newton-Raphson é um método iterativo que pode ser usado para estimar o vetor de parâmetros <span class="math inline">\({\bf \beta}\)</span>. Em cada iteração, fazemos uma aproximação quadrática do log de verossimilhança e maximizamos isso.</p>
+<p>Mais especificamente, seja <span class="math inline">\(u \in \mathbb{R}^p\)</span> o gradiente <span class="math inline">\(\partial L / \partial \beta\)</span>, <span class="math inline">\({\bf H} \in \mathbb{R}^{p \times p}\)</span> a matriz Hessiana, e assuma que <span class="math inline">\(\beta^{(k)}\)</span> é nossa estimativa para <span class="math inline">\(\hat{\beta}\)</span> no tempo <span class="math inline">\(k\)</span>. (Podemos pensar em <span class="math inline">\(u\)</span> e <span class="math inline">\({\bf H}\)</span> como funções de <span class="math inline">\(\beta\)</span>). Sejam <span class="math inline">\(u^{(t)}\)</span> e <span class="math inline">\({\bf H}^{(k)}\)</span> a avaliação de <span class="math inline">\(u\)</span> e <span class="math inline">\(\bf H\)</span> em <span class="math inline">\(\beta^{(k)}\)</span>. A expansão de Taylor de <span class="math inline">\(L\)</span> em torno de <span class="math inline">\(\beta^{(k)}\)</span> dá</p>
+<span class="math display">\[\begin{aligned} L(\beta) \approx L(\beta^{(t)}) + (u^{(t)})^T (\beta - \beta^{(t)}) + \frac{1}{2} (\beta - \beta^{(t)})^T {\bf H}^{(t)} (\beta - \beta^{(t)}). \end{aligned}\]</span>
+<p>Derivando em relação à <span class="math inline">\(\beta\)</span> e definindo-o como 0, podemos reorganizar os termos para resolver <span class="math inline">\(\beta\)</span>, dando-nos a próxima estimativa</p>
+<p>O vetor score <span class="math inline">\({\bf u}\)</span> e a matriz Hessiana <span class="math inline">\({\bf H}\)</span> representam as derivadas de primeira e segunda ordem, respectivamente, em que:</p>
+<p><span class="math display">\[\begin{align}
+\frac{\partial l}{\partial \beta}  =\boldsymbol{X}^T\boldsymbol{(y - p)}\\
+%\frac{\partial ^2 \ell}{\partial \beta^2} = - \sum_{i=1}^n \mathbf{x}_{i} \mathbf{x}_{i}^T p_i (1-p_i) \\
+\frac{\partial ^2 l}{\partial \beta^2} = \boldsymbol{-X^TWX } 
+\end{align}\]</span></p>
+<p>em que <span class="math inline">\(\boldsymbol{W}\)</span> é uma matriz diagonal <span class="math inline">\(n \times n\)</span> com o i-ésimo elemento dado por <span class="math inline">\(p_i(1-p_i)\)</span>, ou seja, <span class="math inline">\(W_{ii} = p_i (1-p_i)\)</span>, com <span class="math inline">\(1 \le i \le n\)</span>.
+. Dessa maneira, o algoritmo pode ser reescrito como:</p>
+<span class="math display">\[\begin{aligned} \beta^{(t+1)} = \beta^{(t)} - ({\bf H}^{(t)})^{-1} u^{(t)}. \end{aligned}\]</span>
+<p><span class="math display">\[\begin{align}
+\boldsymbol{\beta}^{(k+1)} = \boldsymbol{\beta}^{(k)} - \left(  \frac{\partial ^2 l}{\partial \beta^2} \right) \frac{\partial l}{\partial \beta}
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+\boldsymbol{\beta}^{(k+1)} = \boldsymbol{\beta}^{(k)} + (\mathbf{X}^T\mathbf{WX})^{-1}\mathbf{X}^T\mathbf{(y-p)} 
 \end{align}\]</span></p>
 
+</div>
 </div>
 </div>
   <div class="chapter-nav">
@@ -305,6 +371,9 @@ Figure 6.2: Taxa de aprendizado pequena e grande (figura adaptada de Boehmke &am
 </ul>
 </li>
 <li><a class="nav-link" href="#gradiente-descendente"><span class="header-section-number">6.3</span> Gradiente Descendente</a></li>
+<li>
+<a class="nav-link" href="#regress%C3%A3o-log%C3%ADstica"><span class="header-section-number">6.4</span> Regressão Logística</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#newton-raphson"><span class="header-section-number">6.4.1</span> Newton-Raphson</a></li></ul>
+</li>
 </ul>
 
       <div class="book-extra">
@@ -321,7 +390,7 @@ Figure 6.2: Taxa de aprendizado pequena e grande (figura adaptada de Boehmke &am
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-08-22.</p>
+    <p>"<strong>UnB - Data Science</strong>" was written by Cayan Portela and Herbert Kimura. It was last built on 2023-09-12.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

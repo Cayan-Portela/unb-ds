@@ -11,6 +11,8 @@ eq:b1
 eq:gradientedesc
 fig:gradient-descent-fig
 fig:gradient-descent-step
+eq:reglogistica
+eq:verosslogistica
 about
 intro
 revisão
@@ -41,4 +43,6 @@ regressão-linear-simples
 forma-matricial
 decomposição-qr
 gradiente-descendente
+regressão-logística
+newton-raphson
 other-considerations

@@ -158,12 +158,12 @@ $$\boldsymbol{\hat{\beta}} = \boldsymbol{(X'X)^{-1}X'Y}$$
 
 Operações envolvendo a inversa de uma matriz podem ser bastante custosas do ponto de vista computacional, principalmente quando a matriz cresce em dimensões. Uma alternativa bastante utilizada é a decomposição $QR$ (através do algoritmo Gram-Schmidt, por exemplo).
 
-Sendo $X_{n\times p}$ uma matriz de posto completo ($n$ > $p$, rank=$p$), então podemos decompor $X$ em $$X = QR$$
+Sendo $X_{n\times p}$ uma matriz de posto completo ($n$ > $p$, rank=$p$), então podemos decompor $\boldsymbol{X}$ em $$\boldsymbol{X} = \boldsymbol{QR}$$
 
 em que:
 
-- $Q$ tem dimensões $n\times p$ e $Q'Q = I$
-- $R$ tem dimensões $p \times p$ e é uma matriz triangular superior 
+- $\boldsymbol{Q}$ tem dimensões $n\times p$ e $\boldsymbol{Q'Q} = \boldsymbol{I}$
+- $\boldsymbol{R}$ tem dimensões $p \times p$ e é uma matriz triangular superior 
 
 Dessa maneira, podemos reescrever o processo de mínimos quadrados acima, como:
 
@@ -293,5 +293,90 @@ O gradiente é igual a:
  & \nabla_\beta [(X\beta - Y)'(X\beta - Y)] &=\\
  & \nabla_\beta [(\beta'X' - Y')(X\beta - Y)] &=\\
  & \nabla_\beta [\beta'X'X\beta - 2\beta'X'Y + Y'Y] &=\\
- & 2X'X\beta - 2X'Y
+ & 2X'X\beta - 2X'Y &=\\
+ & 2X'( X\beta - Y)
+\end{align}
+
+## Regressão Logística
+
+Para problemas de classificação binária, nossa variável Y assume dois possíveis valores: 0 ou 1 (sim ou não). Assim, desejamos saber a probabilidade de y assumir o valor target 1. Para isso, o modelo de Regerssão Logística utiliza a função de ligação logística, como função de ligação na combinação linear do modelo.  Agora estamos modelando uma probabilidade, então nossa variável target $Y = p(X)$ indica a probabilidade de ocorrência do evento. 
+
+Então, temos que:
+
+\begin{align}
+&p(X) &\ = \quad &\frac{e^{\beta_0 + \beta_1x}}{1 + e^{\beta_0 + \beta_1x}} \\
+&\frac{p(X)}{1-p(x)} &\ = \quad &e^{\beta_0 + \beta_1x}
+\end{align}
+
+Então:
+
+\begin{align}
+& \text{log}\left(\frac{p(X)}{1-p(x)}\right) = {\beta_0 + \beta_1x}
+(\#eq:reglogistica)
+\end{align}
+
+O processo de otimização para encontrar os estimadores dos parâmetros $\boldsymbol{\beta}$ envolve maximizar a log-verossimilhança da distribuição $Bernoulli(p)$.
+
+> $\text{Bernoulli}(p):$ 
+> Distribuição associada a um único experimento aleatório com apenas dois resultados possíveis: $0$, caso se observe $A$; e $1$, caso se observe $A^c$.
+> Seja $X=$ número de sucessos (espaço amostral finito), então temos que:
+
+$$f(x)=P(X=x)=\begin{cases} 1-p,&\quad x=0,\\ p,&\quad x=1.\end{cases}$$
+
+<br>
+
+\begin{align}
+& L(\beta) &\ = &\prod p_i^{y_i} \times (1-p_i)^{(1-y_i)} \\
+& \text{log}L(\beta) &\ = &\sum y_i \text{log}(p_i) + (1-y_i)\text{log}(1-p_i) \\
+& \text{log}L(\beta) &\ = &\sum y_i \text{log}(p_i) + \text{log}(1-p_i) - y_i\text{log}(1-p_i) \\
+& \text{log}L(\beta) &\ = &\sum y_i \text{log}(p_i) - y_i\text{log}(1-p_i) + \text{log}(1-p_i) \\
+& \text{log}L(\beta) &\ = &\sum y_i \text{log}\left(\frac{p_i}{1-p_i}\right) + \text{log}(1-p_i) \\
+& \text{log}L(\beta) &\ = &\sum y_i \text{log}\left(\frac{p_i}{1-p_i}\right) + \text{log}\left(\frac{1}{1+e^{\beta_0 + \beta_1x}}\right)
+\end{align}
+
+<br>
+
+\begin{align}
+& \text{log}L(\beta) & = \sum y_i \text{log}(\frac{p_i}{1-p_i}) + \text{log}(1) - \text{log}(1+e^{\beta_0 + \beta_1x})
+\end{align}
+
+Substituindo $\text{log}\left(\frac{p(X)}{1-p(x)}\right) = {\beta_0 + \beta_1x}$, obtemos a função de $\boldsymbol{\beta}$ que desejamos otimizar:
+
+\begin{align}
+\sum_{i=1}^n   \left[ y_i \boldsymbol{\beta}^T  \mathbf{x}_{i}  - \log \left(1 + \exp(  \boldsymbol{\beta}^T \mathbf{x}_{i}  \right)    \right]
+(\#eq:verosslogistica)
+\end{align}
+
+
+### Newton-Raphson
+
+Neste caso não possuimos uma solução fechada para ${\bf \beta}$. O método Newton-Raphson é um método iterativo que pode ser usado para estimar o vetor de parâmetros ${\bf \beta}$. Em cada iteração, fazemos uma aproximação quadrática do log de verossimilhança e maximizamos isso.
+
+Mais especificamente, seja $u \in \mathbb{R}^p$ o gradiente $\partial L / \partial \beta$, ${\bf H} \in \mathbb{R}^{p \times p}$ a matriz Hessiana, e assuma que $\beta^{(k)}$ é nossa estimativa para $\hat{\beta}$ no tempo $k$. (Podemos pensar em $u$ e ${\bf H}$ como funções de $\beta$). Sejam $u^{(t)}$ e ${\bf H}^{(k)}$ a avaliação de $u$ e $\bf H$ em $\beta^{(k)}$. A expansão de Taylor de $L$ em torno de $\beta^{(k)}$ dá
+
+\begin{aligned} L(\beta) \approx L(\beta^{(t)}) + (u^{(t)})^T (\beta - \beta^{(t)}) + \frac{1}{2} (\beta - \beta^{(t)})^T {\bf H}^{(t)} (\beta - \beta^{(t)}). \end{aligned}
+
+Derivando em relação à $\beta$ e definindo-o como 0, podemos reorganizar os termos para resolver $\beta$, dando-nos a próxima estimativa
+
+O vetor score ${\bf u}$ e a matriz Hessiana ${\bf H}$ representam as derivadas de primeira e segunda ordem, respectivamente, em que:
+
+\begin{align}
+\frac{\partial l}{\partial \beta}  =\boldsymbol{X}^T\boldsymbol{(y - p)}\\
+%\frac{\partial ^2 \ell}{\partial \beta^2} = - \sum_{i=1}^n \mathbf{x}_{i} \mathbf{x}_{i}^T p_i (1-p_i) \\
+\frac{\partial ^2 l}{\partial \beta^2} = \boldsymbol{-X^TWX } 
+\end{align}
+
+em que $\boldsymbol{W}$ é uma matriz diagonal $n \times n$ com o i-ésimo elemento dado por $p_i(1-p_i)$, ou seja, $W_{ii} = p_i (1-p_i)$, com $1 \le i \le n$.
+. Dessa maneira, o algoritmo pode ser reescrito como:
+
+\begin{aligned} \beta^{(t+1)} = \beta^{(t)} - ({\bf H}^{(t)})^{-1} u^{(t)}. \end{aligned}
+
+
+\begin{align}
+\boldsymbol{\beta}^{(k+1)} = \boldsymbol{\beta}^{(k)} - \left(  \frac{\partial ^2 l}{\partial \beta^2} \right) \frac{\partial l}{\partial \beta}
+\end{align}
+
+
+\begin{align}
+\boldsymbol{\beta}^{(k+1)} = \boldsymbol{\beta}^{(k)} + (\mathbf{X}^T\mathbf{WX})^{-1}\mathbf{X}^T\mathbf{(y-p)} 
 \end{align}
